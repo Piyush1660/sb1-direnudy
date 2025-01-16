@@ -1,8 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
 import { MessageSquare, Github, CheckCircle, AlertCircle, Clock } from 'lucide-react';
+import 'animate.css';
+import { Link } from 'react-router-dom';
 
+// Helper function for adding scroll-triggered animations with explicit ref typing
+const useScrollAnimation = (ref: React.RefObject<HTMLElement>) => {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate__fadeInUp');
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [ref]);
+};
+ 
 function LandingPage() {
+  const aboutRef = useRef<HTMLElement>(null);
+  const featuresRef = useRef<HTMLElement>(null);
+  const whitelistRef = useRef<HTMLElement>(null);
+  const joinRef = useRef<HTMLElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
+
+  // Scroll-triggered animations
+  useScrollAnimation(aboutRef);
+  useScrollAnimation(featuresRef);
+  useScrollAnimation(whitelistRef);
+  useScrollAnimation(joinRef);
+  useScrollAnimation(footerRef);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white">
       <header className="bg-black/50 backdrop-blur-sm fixed w-full z-50">
@@ -21,19 +57,19 @@ function LandingPage() {
         </div>
       </header>
 
-      <section className="pt-32 pb-20 px-4">
+      <section className="pt-32 pb-20 px-4" ref={aboutRef}>
         <div className="container mx-auto text-center">
-          <h2 className="text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+          <h2 className="text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate__animated animate__fadeInUp animate__slow">
             Welcome to City Town RP
           </h2>
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__slow animate__delay-1s">
             Step into a meticulously crafted roleplay experience where your character's story shapes our vibrant city. 
             Join our whitelisted community for quality RP.
           </p>
           <div className="flex justify-center gap-6">
             <a 
               href="#whitelist" 
-              className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all"
+              className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all animate__animated animate__fadeInUp animate__slow animate__delay-2s"
             >
               <CheckCircle className="w-5 h-5" />
               Apply Now
@@ -42,7 +78,7 @@ function LandingPage() {
               href="https://discord.gg/6xgAJ9pnAZ" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2] hover:bg-[#4752C4] px-8 py-3 rounded-lg font-semibold transition-colors"
+              className="flex items-center gap-2 bg-[#5865F2] hover:bg-[#4752C4] px-8 py-3 rounded-lg font-semibold transition-colors animate__animated animate__fadeInUp animate__slow animate__delay-2s"
             >
               <MessageSquare className="w-5 h-5" />
               Join Discord
@@ -51,21 +87,21 @@ function LandingPage() {
         </div>
       </section>
 
-      <section id="features" className="py-20 bg-black/30">
+      <section id="features" className="py-20 bg-black/30" ref={featuresRef}>
         <div className="container mx-auto px-4">
-          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate__animated animate__fadeInUp animate__slow animate__delay-1s">
             Why Choose City Town RP?
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all">
+            <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all animate__animated animate__fadeInUp animate__slow">
               <h4 className="text-2xl font-semibold mb-4 text-purple-400">Quality Roleplay</h4>
               <p className="text-gray-300">Curated whitelisted community ensuring high-quality RP experiences and interactions.</p>
             </div>
-            <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all">
+            <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all animate__animated animate__fadeInUp animate__slow">
               <h4 className="text-2xl font-semibold mb-4 text-purple-400">Active Community</h4>
               <p className="text-gray-300">Join our thriving community of dedicated roleplayers and make lasting connections.</p>
             </div>
-            <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all">
+            <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all animate__animated animate__fadeInUp animate__slow">
               <h4 className="text-2xl font-semibold mb-4 text-purple-400">Custom Economy</h4>
               <p className="text-gray-300">Balanced economy system with unique jobs and business opportunities.</p>
             </div>
@@ -73,28 +109,28 @@ function LandingPage() {
         </div>
       </section>
 
-      <section id="whitelist" className="py-20">
+      <section id="whitelist" className="py-20" ref={whitelistRef}>
         <div className="container mx-auto px-4">
-          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate__animated animate__fadeInUp animate__slow animate__delay-1s">
             Whitelist Application Process
           </h3>
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white/5 p-8 rounded-xl text-center">
+              <div className="bg-white/5 p-8 rounded-xl text-center animate__animated animate__fadeInUp animate__slow">
                 <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                   <MessageSquare className="w-8 h-8 text-purple-400" />
                 </div>
                 <h4 className="text-xl font-semibold mb-4">1. Join Discord</h4>
                 <p className="text-gray-400">Join our Discord server and verify your account</p>
               </div>
-              <div className="bg-white/5 p-8 rounded-xl text-center">
+              <div className="bg-white/5 p-8 rounded-xl text-center animate__animated animate__fadeInUp animate__slow">
                 <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle className="w-8 h-8 text-purple-400" />
                 </div>
                 <h4 className="text-xl font-semibold mb-4">2. Submit Application</h4>
                 <p className="text-gray-400">Fill out our detailed whitelist application form</p>
               </div>
-              <div className="bg-white/5 p-8 rounded-xl text-center">
+              <div className="bg-white/5 p-8 rounded-xl text-center animate__animated animate__fadeInUp animate__slow">
                 <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Clock className="w-8 h-8 text-purple-400" />
                 </div>
@@ -102,7 +138,7 @@ function LandingPage() {
                 <p className="text-gray-400">Applications reviewed within 24-48 hours</p>
               </div>
             </div>
-            <div className="mt-12 p-6 bg-white/5 rounded-xl">
+            <div className="mt-12 p-6 bg-white/5 rounded-xl animate__animated animate__fadeInUp animate__slow">
               <h4 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 text-purple-400" />
                 Important Notes
@@ -128,50 +164,20 @@ function LandingPage() {
         </div>
       </section>
 
-      <section id="about" className="py-20 bg-black/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-              About City Town RP
-            </h3>
-            <p className="text-xl text-gray-300 mb-8">
-              City Town RP is a premier FiveM roleplay community focused on creating immersive, 
-              realistic scenarios in a carefully curated environment. Our whitelisted server ensures 
-              quality interactions and memorable RP experiences for all players.
-            </p>
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div className="p-6">
-                <h4 className="text-4xl font-bold text-purple-400 mb-2">150+</h4>
-                <p className="text-gray-400">Active Players</p>
-              </div>
-              <div className="p-6">
-                <h4 className="text-4xl font-bold text-purple-400 mb-2">30+</h4>
-                <p className="text-gray-400">Custom Jobs</p>
-              </div>
-              <div className="p-6">
-                <h4 className="text-4xl font-bold text-purple-400 mb-2">99%</h4>
-                <p className="text-gray-400">Uptime</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="join" className="py-20">
+      <section id="join" className="py-20" ref={joinRef}>
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+          <h3 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate__animated animate__fadeInUp animate__slow animate__delay-1s">
             Ready to Start Your Journey?
           </h3>
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            Join our Discord server to begin the whitelisting process and become part of our thriving.
-            roleplay community.
+          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__slow animate__delay-1s">
+            Join our Discord server to begin the whitelisting process and become part of our thriving roleplay community.
           </p>
           <div className="flex justify-center gap-6">
             <a 
               href="https://discord.gg/6xgAJ9pnAZ" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#5865F2] hover:bg-[#4752C4] px-12 py-4 rounded-lg font-semibold text-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-[#5865F2] hover:bg-[#4752C4] px-12 py-4 rounded-lg font-semibold text-lg transition-colors animate__animated animate__fadeInUp animate__slow animate__delay-1s"
             >
               <MessageSquare className="w-6 h-6" />
               Join Our Discord
@@ -180,7 +186,7 @@ function LandingPage() {
         </div>
       </section>
 
-      <footer className="bg-black/50 py-12">
+      <footer className="bg-black/50 py-12" ref={footerRef}>
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div className="text-center md:text-left">
@@ -221,7 +227,7 @@ function LandingPage() {
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p> {new Date().getFullYear()} CITY TOWN RP</p>
-            <p className="mt-2 text-sm">JOIN US AND BEGINS NEW STORY</p>
+            <p className="mt-2 text-sm">JOIN US AND BEGIN YOUR NEW STORY</p>
           </div>
         </div>
       </footer>

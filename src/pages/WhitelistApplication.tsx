@@ -162,7 +162,7 @@ function WhitelistApplication() {
                   id="age"
                   name="age"
                   required
-                  min="18"
+                  min="15"
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                   value={formData.age}
                   onChange={handleChange}

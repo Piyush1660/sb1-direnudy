@@ -108,10 +108,10 @@ function LandingPage() {
                 Important Notes
               </h4>
               <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>Minimum age requirement: 18 years</li>
+                <li>Minimum age requirement: 16 years</li>
                 <li>Working microphone required</li>
                 <li>Previous RP experience preferred but not required</li>
-                <li>Must be fluent in English</li>
+                <li>Must be fluent in English/Hindi</li>
                 <li>Character backstory required in application</li>
               </ul>
               <div className="mt-8 text-center">

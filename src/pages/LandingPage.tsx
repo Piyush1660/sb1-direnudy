@@ -186,11 +186,15 @@ function LandingPage() {
                   <CheckCircle className="w-6 h-6" />
                   Apply for Whitelist
                 </Link>
+ 
               </div>
             </div>
           </div>
         </div>
       </section>
+
+     
+
 
       <section id="join" className="py-20" ref={joinRef}>
         <div className="container mx-auto px-4 text-center">

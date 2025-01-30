@@ -108,7 +108,34 @@ function LandingPage() {
           </div>
         </div>
       </section>
-
+      <section id="about" className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h3 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+              About Echo RP
+            </h3>
+            <p className="text-xl text-gray-300 mb-8">
+              Echo RP is a premier FiveM roleplay community dedicated to providing the most immersive and 
+              enjoyable RP experience possible. Our server features custom scripts, unique jobs, and a 
+              dedicated staff team to ensure the best possible environment for our players.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <div className="p-6">
+                <h4 className="text-4xl font-bold text-purple-400 mb-2">80+</h4>
+                <p className="text-gray-400">Active Players</p>
+              </div>
+              <div className="p-6">
+                <h4 className="text-4xl font-bold text-purple-400 mb-2">30+</h4>
+                <p className="text-gray-400">Custom Jobs</p>
+              </div>
+              <div className="p-6">
+                <h4 className="text-4xl font-bold text-purple-400 mb-2">24/7</h4>
+                <p className="text-gray-400">Server Uptime</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section id="whitelist" className="py-20" ref={whitelistRef}>
         <div className="container mx-auto px-4">
           <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate__animated animate__fadeInUp animate__slow animate__delay-1s">

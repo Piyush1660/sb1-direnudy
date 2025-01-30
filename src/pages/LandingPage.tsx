@@ -52,6 +52,7 @@ function LandingPage() {
               <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
               <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
               <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a>
+              <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
             </nav>
           </div>
         </div>
@@ -228,6 +229,7 @@ function LandingPage() {
                 <a href="#about" className="block text-gray-400 hover:text-purple-400 transition-colors">About</a>
                 <a href="#features" className="block text-gray-400 hover:text-purple-400 transition-colors">Features</a>
                 <a href="#whitelist" className="block text-gray-400 hover:text-purple-400 transition-colors">Whitelist</a>
+                <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
               </div>
             </div>
             <div className="text-center md:text-right">

@@ -95,7 +95,7 @@ const rules = [
   {
     section: "6. MISCELLANEOUS RULES",
     rules: [
-      "DM Promotion: Promoting other servers or communities (DM Promotion) within APL Nation is not allowed.",
+      "DM Promotion: Promoting other servers or communities (DM Promotion) within CTRP is not allowed.",
       "Staff DM: Direct messaging (DM) staff members for non-emergency issues is discouraged.",
       "No Refund for Any Purchase: All in-game purchases are final.",
       "Account Compromise: Players are responsible for securing their accounts.",

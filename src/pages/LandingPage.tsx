@@ -113,10 +113,10 @@ function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h3 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-              About Echo RP
+              About CITY TOWN RP
             </h3>
             <p className="text-xl text-gray-300 mb-8">
-              Echo RP is a premier FiveM roleplay community dedicated to providing the most immersive and 
+              CTRP is a premier FiveM roleplay community dedicated to providing the most immersive and 
               enjoyable RP experience possible. Our server features custom scripts, unique jobs, and a 
               dedicated staff team to ensure the best possible environment for our players.
             </p>

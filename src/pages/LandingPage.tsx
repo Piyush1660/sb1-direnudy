@@ -113,7 +113,7 @@ function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h3 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-              About CITY TOWN RP
+              About City Town RP
             </h3>
             <p className="text-xl text-gray-300 mb-8">
               CTRP is a premier FiveM roleplay community dedicated to providing the most immersive and 
@@ -233,7 +233,7 @@ function LandingPage() {
                 <a href="#about" className="block text-gray-400 hover:text-purple-400 transition-colors">About</a>
                 <a href="#features" className="block text-gray-400 hover:text-purple-400 transition-colors">Features</a>
                 <a href="#whitelist" className="block text-gray-400 hover:text-purple-400 transition-colors">Whitelist</a>
-                <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
+              
               </div>
             </div>
             <div className="text-center md:text-right">
@@ -259,8 +259,8 @@ function LandingPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p> {new Date().getFullYear()} CITY TOWN RP</p>
-            <p className="mt-2 text-sm">JOIN US AND BEGIN YOUR NEW STORY</p>
+            <p className="mt-2 text-sm">JOIN CTRP AND BEGIN YOUR NEW STORY</p>
+            <p className="mt-2 text-sm">DEVELOPER : PIYUSH CHAUDHARY</p>
           </div>
         </div>
       </footer>

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Send } from 'lucide-react';
+
+
 
 function WhitelistApplication() {
   const [formData, setFormData] = useState({
@@ -17,9 +19,15 @@ function WhitelistApplication() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    // Scroll to the top when the component is mounted
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
 
     try {
       // Replace this URL with your actual Discord webhook URL
@@ -147,7 +155,7 @@ function WhitelistApplication() {
                   name="discordId"
                   required
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="e.g., username#1234"
+                  placeholder="e.g., 1234567890123456"
                   value={formData.discordId}
                   onChange={handleChange}
                 />

@@ -92,11 +92,12 @@ function WhitelistApplication() {
       });
 
       if (!discordResponse.ok) {
+      
         throw new Error('Failed to send application to Discord');
       }
 
       // Google Sheets Web App URL
-      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxjETkH1e1IaQve2qg4po1tc0aCSrZT__Qrg4NJwaTTQwmANEnwKKPQDE0iA0gmd3MQ5Q/exec";
+      const googleSheetsUrl = "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbwCQLTF2gFrqt124zO12YAiw7RhzNakurJA26-35dDIsckJ6-GrkmrKURxj6lm9k5oxVA/exec";
 
       // Send to Google Sheets
       const googleSheetsResponse = await fetch(googleSheetsUrl, {

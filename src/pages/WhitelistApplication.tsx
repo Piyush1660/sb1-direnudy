@@ -32,7 +32,7 @@ function WhitelistApplication() {
     try {
       // Replace this URL with your actual Discord webhook URL
       const webhookUrl = "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
-      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbybVfyPS19gb5LkYg58Ksi0hfXa72DIBQHDuq9wQrKkTTLlTOBJhPUcJJoRfP9-JjchXg/exec";
+      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbx5h3rp2XmE-gZ7d8m97sAv9P4yMXhd7RAtqSTw_ZQco_zTatI158ju4l5AXqBI0H1ibA/exec";
       const discordMessage = {
         embeds: [
           {

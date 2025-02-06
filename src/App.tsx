@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MessageSquare, Github, CheckCircle, AlertCircle, Clock } from 'lucide-react';
 import LandingPage from './pages/LandingPage';
 import WhitelistApplication from './pages/WhitelistApplication';

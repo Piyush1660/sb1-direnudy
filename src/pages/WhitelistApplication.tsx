@@ -99,18 +99,20 @@ function WhitelistApplication() {
       }
 
       // Send data to Google Sheets
-     const sheetsResponse = await fetch(googleSheetsUrl, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData)
+    const sheetsResponse = await fetch(googleSheetsUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData),
 });
 
-const sheetsData = await sheetsResponse.json();
-console.log("Google Sheets Response:", sheetsData);
-
-if (!sheetsResponse.ok || sheetsData.status !== "success") {
-  throw new Error(`Google Sheets Error: ${sheetsData.message}`);
+const data = await sheetsResponse.json();  // Capture the response as JSON
+console.log(data);  // Log the response to see what comes back
+if (!sheetsResponse.ok) {
+  throw new Error('Failed to save application to Google Sheets.');
 }
+
 
       alert('Application submitted successfully! Please wait for our team to review your application.');
       // Reset form

@@ -96,7 +96,7 @@ function WhitelistApplication() {
       }
 
       // Google Sheets Web App URL
-      const googleSheetsUrl = "YOUR_GOOGLE_APPS_SCRIPT_URL";
+      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxjETkH1e1IaQve2qg4po1tc0aCSrZT__Qrg4NJwaTTQwmANEnwKKPQDE0iA0gmd3MQ5Q/exec";
 
       // Send to Google Sheets
       const googleSheetsResponse = await fetch(googleSheetsUrl, {

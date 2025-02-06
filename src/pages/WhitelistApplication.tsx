@@ -97,7 +97,7 @@ function WhitelistApplication() {
       }
 
       // Google Sheets Web App URL
-      const googleSheetsUrl = "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbwCQLTF2gFrqt124zO12YAiw7RhzNakurJA26-35dDIsckJ6-GrkmrKURxj6lm9k5oxVA";
+      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbwCQLTF2gFrqt124zO12YAiw7RhzNakurJA26-35dDIsckJ6-GrkmrKURxj6lm9k5oxVA";
 
       // Send to Google Sheets
       const googleSheetsResponse = await fetch(googleSheetsUrl, {

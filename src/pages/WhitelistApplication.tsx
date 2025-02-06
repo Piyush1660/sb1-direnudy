@@ -1,8 +1,6 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Send } from 'lucide-react';
-
-
 
 function WhitelistApplication() {
   const [formData, setFormData] = useState({
@@ -20,7 +18,6 @@ function WhitelistApplication() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Scroll to the top when the component is mounted
     window.scrollTo(0, 0);
   }, []);
 
@@ -28,16 +25,15 @@ function WhitelistApplication() {
     e.preventDefault();
     setIsSubmitting(true);
 
-
     try {
-      // Replace this URL with your actual Discord webhook URL
-      const webhookUrl = "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
+      // Discord Webhook URL
+      const discordWebhookUrl = "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
 
       const discordMessage = {
         embeds: [
           {
             title: "New Whitelist Application",
-            color: 0x9C44FF, // Purple color
+            color: 0x9C44FF,
             fields: [
               {
                 name: "📝 Personal Information",
@@ -69,7 +65,7 @@ function WhitelistApplication() {
               },
               {
                 name: "📖 Character Backstory",
-                value: formData.backstory.slice(0, 1024), // Discord has a 1024 character limit per field
+                value: formData.backstory.slice(0, 1024),
                 inline: false
               },
               {
@@ -86,7 +82,8 @@ function WhitelistApplication() {
         ]
       };
 
-      const response = await fetch(webhookUrl, {
+      // Send to Discord
+      const discordResponse = await fetch(discordWebhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,12 +91,27 @@ function WhitelistApplication() {
         body: JSON.stringify(discordMessage)
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send application');
+      if (!discordResponse.ok) {
+        throw new Error('Failed to send application to Discord');
+      }
+
+      // Google Sheets Web App URL
+      const googleSheetsUrl = "YOUR_GOOGLE_APPS_SCRIPT_URL";
+
+      // Send to Google Sheets
+      const googleSheetsResponse = await fetch(googleSheetsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!googleSheetsResponse.ok) {
+        throw new Error('Failed to send application to Google Sheets');
       }
 
       alert('Application submitted successfully! Please wait for our team to review your application.');
-      // Reset form
       setFormData({
         discordId: '',
         age: '',

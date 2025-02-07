@@ -112,10 +112,19 @@ function WhitelistApplication() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formDataPayload),
-        }),
-      ]);
+        },
+        body: JSON.stringify(formDataPayload),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          alert("Application submitted successfully!");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("There was an error submitting your application.");
+       });
+
 
       if (!discordResponse.ok) {
         throw new Error(`Discord webhook failed: ${discordResponse.statusText}`);

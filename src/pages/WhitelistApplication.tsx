@@ -133,7 +133,6 @@ function WhitelistApplication() {
   } finally {
     setIsSubmitting(false);
   }
-};
       
       alert('Application submitted successfully! Please wait for our team to review your application.');
       // Reset form

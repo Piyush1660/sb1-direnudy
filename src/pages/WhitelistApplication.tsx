@@ -24,6 +24,8 @@ function WhitelistApplication() {
     window.scrollTo(0, 0);
   }, []);
 
+  const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxHt87ibFDUw1ajOM2OvAOsIIjEsBqfnfX3lbWcKyloRXZSvzVFjrA7WvyIGsb3nzBQLQ/exec";
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -120,10 +122,6 @@ function WhitelistApplication() {
          },
          body: JSON.stringify(formData),
        });
-       
-       
-       function submitApplication() {
-          console.log(googleSheetsWebhookUrl);
          
        if (!response.ok) {
          throw new Error(`Failed to send application: ${response.statusText}`);

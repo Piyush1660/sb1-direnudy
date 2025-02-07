@@ -32,7 +32,22 @@ function WhitelistApplication() {
     try {
       // Replace this URL with your actual Discord webhook URL
       const webhookUrl = "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
+      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbwZcELB73Ur5KJqMRDwN3-yAIEVTw7yW4ktHUkN90rUZt7OURF4JFjQdb5-FaX9nlqqvA/exec"; // Replace with actual URL
 
+      const formDataPayload = {
+        discordId: formData.discordId,
+        age: formData.age,
+        timezone: formData.timezone,
+        microphone: formData.microphone,
+        experience: formData.experience || "No previous experience",
+        characterName: formData.characterName,
+        characterAge: formData.characterAge,
+        backstory: formData.backstory,
+        whyJoin: formData.whyJoin,
+        scenarioResponse: formData.scenarioResponse
+    };
+
+      
       const discordMessage = {
         embeds: [
           {
@@ -97,7 +112,14 @@ function WhitelistApplication() {
       if (!response.ok) {
         throw new Error('Failed to send application');
       }
+      // Send data to Google Sheets
+      await fetch(googleSheetsUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formDataPayload)
+    });
 
+      
       alert('Application submitted successfully! Please wait for our team to review your application.');
       // Reset form
       setFormData({

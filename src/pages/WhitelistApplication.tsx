@@ -121,7 +121,11 @@ function WhitelistApplication() {
          },
          body: JSON.stringify(formData),
        });
-
+       
+       
+       function submitApplication() {
+          console.log(googleSheetsWebhookUrl);
+         
        if (!response.ok) {
          throw new Error(`Failed to send application: ${response.statusText}`);
        }

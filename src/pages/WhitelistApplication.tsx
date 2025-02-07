@@ -25,7 +25,7 @@ function WhitelistApplication() {
   }, []);
 
  const googleSheetsUrl =
-    "https://script.google.com/macros/s/AKfycbxHt87ibFDUw1ajOM2OvAOsIIjEsBqfnfX3lbWcKyloRXZSvzVFjrA7WvyIGsb3nzBQLQ/exec";
+    "https://script.google.com/macros/s/AKfycbyuCLHJHF0OOeZBfooEbGK0KsH_MELk8mqIKEE5hu8a72coOgYCUxhb5AufrMPfZ3Dv9w/exec";
   const webhookUrl =
     "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
 

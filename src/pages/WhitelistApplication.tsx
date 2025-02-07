@@ -123,7 +123,7 @@ function WhitelistApplication() {
         .catch((error) => {
           console.error("Error:", error);
           alert("There was an error submitting your application.");
-       });
+       })
 
 
       if (!discordResponse.ok) {

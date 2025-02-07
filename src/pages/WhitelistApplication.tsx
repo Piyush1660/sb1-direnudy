@@ -24,133 +24,107 @@ function WhitelistApplication() {
     window.scrollTo(0, 0);
   }, []);
 
- const googleSheetsUrl =
-    "https://script.google.com/macros/s/AKfycbzcpSkrExy5IxpyOcFWUOP0M8q1j3jJHvT1U-f8jX2MEikWibs_r00AgCx-9LsjUN_Bcg/exec";
-
-  const webhookUrl =
-    "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const formDataPayload = {
-      discordId: formData.discordId,
-      age: formData.age,
-      timezone: formData.timezone,
-      microphone: formData.microphone,
-      experience: formData.experience || "No previous experience",
-      characterName: formData.characterName,
-      characterAge: formData.characterAge,
-      backstory: formData.backstory,
-      whyJoin: formData.whyJoin,
-      scenarioResponse: formData.scenarioResponse,
-    };
-
-    const discordMessage = {
-      embeds: [
-        {
-          title: "New Whitelist Application",
-          color: 0x9c44ff,
-          fields: [
-            {
-              name: "📝 Personal Information",
-              value: `**Discord ID:** ${formData.discordId}\n**Age:** ${formData.age}\n**Timezone:** ${formData.timezone}\n**Has Microphone:** ${formData.microphone ? "Yes" : "No"}`,
-              inline: false,
-            },
-            {
-              name: "🎭 RP Experience",
-              value: formData.experience || "No previous experience",
-              inline: false,
-            },
-            {
-              name: "❓ Why Join City Town RP",
-              value: formData.whyJoin,
-              inline: false,
-            },
-            {
-              name: "👤 Character Information",
-              value: `**Name:** ${formData.characterName}\n**Age:** ${formData.characterAge}`,
-              inline: false,
-            },
-            {
-              name: "📖 Character Backstory",
-              value: formData.backstory.slice(0, 1024),
-              inline: false,
-            },
-            {
-              name: "🎬 Scenario Response",
-              value: formData.scenarioResponse.slice(0, 1024),
-              inline: false,
-            },
-          ],
-          timestamp: new Date().toISOString(),
-          footer: {
-            text: "City Town RP Whitelist Application",
-          },
-        },
-      ],
-    };
 
     try {
-      // Send data to Discord webhook and Google Sheets
-      const [discordResponse, sheetsResponse] = await Promise.all([
-        fetch(webhookUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(discordMessage),
-        }),
-        fetch(googleSheetsUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formDataPayload),
-        }),
-      ]);
+      // Replace this URL with your actual Discord webhook URL
+      const webhookUrl = "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
 
-      if (!discordResponse.ok) {
-        throw new Error(`Discord webhook failed: ${discordResponse.statusText}`);
+      const discordMessage = {
+        embeds: [
+          {
+            title: "New Whitelist Application",
+            color: 0x9C44FF, // Purple color
+            fields: [
+              {
+                name: "📝 Personal Information",
+                value: [
+                  `**Discord ID:** ${formData.discordId}`,
+                  `**Age:** ${formData.age}`,
+                  `**Timezone:** ${formData.timezone}`,
+                  `**Has Microphone:** ${formData.microphone ? "Yes" : "No"}`,
+                ].join('\n'),
+                inline: false
+              },
+              {
+                name: "🎭 RP Experience",
+                value: formData.experience || "No previous experience",
+                inline: false
+              },
+              {
+                name: "❓ Why Join City Town RP",
+                value: formData.whyJoin,
+                inline: false
+              },
+              {
+                name: "👤 Character Information",
+                value: [
+                  `**Name:** ${formData.characterName}`,
+                  `**Age:** ${formData.characterAge}`,
+                ].join('\n'),
+                inline: false
+              },
+              {
+                name: "📖 Character Backstory",
+                value: formData.backstory.slice(0, 1024), // Discord has a 1024 character limit per field
+                inline: false
+              },
+              {
+                name: "🎬 Scenario Response",
+                value: formData.scenarioResponse.slice(0, 1024),
+                inline: false
+              }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: {
+              text: "City Town RP Whitelist Application"
+            }
+          }
+        ]
+      };
+
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(discordMessage)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send application');
       }
 
-      // Parse Google Sheets response (should return a JSON confirmation)
-      const sheetsData = await sheetsResponse.json();
-      console.log("Success:", sheetsData);
-
-      alert(
-        "Application submitted successfully! Please wait for our team to review your application."
-      );
-
+      alert('Application submitted successfully! Please wait for our team to review your application.');
       // Reset form
       setFormData({
-        discordId: "",
-        age: "",
-        timezone: "",
-        experience: "",
+        discordId: '',
+        age: '',
+        timezone: '',
+        experience: '',
         microphone: false,
-        characterName: "",
-        characterAge: "",
-        backstory: "",
-        whyJoin: "",
-        scenarioResponse: "",
+        characterName: '',
+        characterAge: '',
+        backstory: '',
+        whyJoin: '',
+        scenarioResponse: ''
       });
     } catch (error) {
-      console.error("Error submitting application:", error);
-      alert(`There was an error submitting your application. Please try again.`);
+      console.error('Error submitting application:', error);
+      alert('There was an error submitting your application. Please try again or contact support.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
     }));
   };
 

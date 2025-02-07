@@ -26,6 +26,7 @@ function WhitelistApplication() {
 
  const googleSheetsUrl =
     "https://script.google.com/macros/s/AKfycbx10CPoOSaPLcH36HjddFOzTZCpWHuksAeOLXW5qhg8AZPsJ_qBKTZQKkDrRwe_aR3dxg/exec";
+
   const webhookUrl =
     "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
 
@@ -50,16 +51,11 @@ function WhitelistApplication() {
       embeds: [
         {
           title: "New Whitelist Application",
-          color: 0x9c44ff, // Purple color
+          color: 0x9c44ff,
           fields: [
             {
               name: "📝 Personal Information",
-              value: [
-                `**Discord ID:** ${formData.discordId}`,
-                `**Age:** ${formData.age}`,
-                `**Timezone:** ${formData.timezone}`,
-                `**Has Microphone:** ${formData.microphone ? "Yes" : "No"}`,
-              ].join("\n"),
+              value: `**Discord ID:** ${formData.discordId}\n**Age:** ${formData.age}\n**Timezone:** ${formData.timezone}\n**Has Microphone:** ${formData.microphone ? "Yes" : "No"}`,
               inline: false,
             },
             {
@@ -74,10 +70,7 @@ function WhitelistApplication() {
             },
             {
               name: "👤 Character Information",
-              value: [
-                `**Name:** ${formData.characterName}`,
-                `**Age:** ${formData.characterAge}`,
-              ].join("\n"),
+              value: `**Name:** ${formData.characterName}\n**Age:** ${formData.characterAge}`,
               inline: false,
             },
             {
@@ -100,6 +93,7 @@ function WhitelistApplication() {
     };
 
     try {
+      // Send data to Discord webhook and Google Sheets
       const [discordResponse, sheetsResponse] = await Promise.all([
         fetch(webhookUrl, {
           method: "POST",
@@ -112,29 +106,18 @@ function WhitelistApplication() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDataPayload),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          alert("Application submitted successfully!");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("There was an error submitting your application.");
-       })
-
+          },
+          body: JSON.stringify(formDataPayload),
+        }),
+      ]);
 
       if (!discordResponse.ok) {
         throw new Error(`Discord webhook failed: ${discordResponse.statusText}`);
       }
 
-      if (!sheetsResponse.ok) {
-        throw new Error(
-          `Google Sheets submission failed: ${sheetsResponse.statusText}`
-        );
-      }
+      // Parse Google Sheets response (should return a JSON confirmation)
+      const sheetsData = await sheetsResponse.json();
+      console.log("Success:", sheetsData);
 
       alert(
         "Application submitted successfully! Please wait for our team to review your application."
@@ -155,23 +138,19 @@ function WhitelistApplication() {
       });
     } catch (error) {
       console.error("Error submitting application:", error);
-      alert(
-        `There was an error submitting your application. Please try again.\n\nError: ${error}`
-      );
+      alert(`There was an error submitting your application. Please try again.`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value, type } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 

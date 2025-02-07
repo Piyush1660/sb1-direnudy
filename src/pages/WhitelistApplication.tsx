@@ -114,25 +114,25 @@ function WhitelistApplication() {
       }
       // Send data to Google Sheets
      try {
-    const response = await fetch(googleSheetsWebhookUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+       const response = await fetch(googleSheetsWebhookUrl, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify(formData),
+       });
 
-      if (!response.ok) {
-      throw new Error(`Failed to send application: ${response.statusText}`);
-    }
+       if (!response.ok) {
+         throw new Error(`Failed to send application: ${response.statusText}`);
+       }
 
-    alert("Application submitted successfully!");
-  } catch (error) {
-    console.error("Error submitting application:", error);
-    alert("There was an error submitting your application.");
-  } finally {
-    setIsSubmitting(false);
-  }
+       alert("Application submitted successfully!");
+     } catch (error) {
+       console.error("Error submitting application:", error);
+       alert("There was an error submitting your application.");
+     } finally {
+       setIsSubmitting(false);
+     }
       
       alert('Application submitted successfully! Please wait for our team to review your application.');
       // Reset form

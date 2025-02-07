@@ -32,7 +32,7 @@ function WhitelistApplication() {
     try {
       // Replace this URL with your actual Discord webhook URL
       const webhookUrl = "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
-      const googleSheetsUrl = "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxHt87ibFDUw1ajOM2OvAOsIIjEsBqfnfX3lbWcKyloRXZSvzVFjrA7WvyIGsb3nzBQLQ/exec"; // Replace with actual URL
+      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxHt87ibFDUw1ajOM2OvAOsIIjEsBqfnfX3lbWcKyloRXZSvzVFjrA7WvyIGsb3nzBQLQ/exec"; // Replace with actual URL
 
       const formDataPayload = {
         discordId: formData.discordId,
@@ -113,15 +113,27 @@ function WhitelistApplication() {
         throw new Error('Failed to send application');
       }
       // Send data to Google Sheets
-      await fetch(googleSheetsUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+     try {
+    const response = await fetch(googleSheetsWebhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-      });
+    });
 
+      if (!response.ok) {
+      throw new Error(`Failed to send application: ${response.statusText}`);
+    }
+
+    alert("Application submitted successfully!");
+  } catch (error) {
+    console.error("Error submitting application:", error);
+    alert("There was an error submitting your application.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
       
       alert('Application submitted successfully! Please wait for our team to review your application.');
       // Reset form

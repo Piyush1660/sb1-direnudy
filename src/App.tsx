@@ -7,11 +7,13 @@ import RulesPage from "./pages/RulesPage";
 
 function App() {
   return (
+    <Router>
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/apply" element={<WhitelistApplication />} />
       <Route path="/rules" element={<RulesPage />} />
     </Routes>
+    </Router>
   );
 }
 

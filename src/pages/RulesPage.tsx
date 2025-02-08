@@ -167,6 +167,7 @@ const RulesPage: React.FC = () => {
         </motion.div>
       </motion.div>
     </motion.div>
+    
   );
 };
 

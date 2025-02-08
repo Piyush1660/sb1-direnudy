@@ -41,22 +41,22 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white">
-      <header className="bg-black/50 backdrop-blur-sm fixed w-full z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-              City Town RP
-            </h1>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#about" className="hover:text-purple-400 transition-colors">About</a>
-              <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
-              <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
-              <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a>
-              <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
-            </nav>
-          </div>
+    <header className="bg-black/50 backdrop-blur-sm fixed w-full z-50">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+            City Town RP
+          </h1>
+          <nav className="hidden md:flex space-x-8">
+            <a href="#about" className="hover:text-purple-400 transition-colors">About</a>
+            <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
+            <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
+            <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a>
+            <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
+          </nav>
         </div>
-      </header>
+      </div>
+    </header>
 
       <section className="pt-32 pb-20 px-4" ref={aboutRef}>
         <div className="container mx-auto text-center">
@@ -260,11 +260,12 @@ function LandingPage() {
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p className="mt-2 text-sm">JOIN CTRP AND BEGIN YOUR NEW STORY</p>
-            <p className="mt-2 text-sm">DEVELOPER : PIYUSH CHAUDHARY</p>
+            <p className="mt-2 text-sm">DEVELOPER : hey PIYUSH CHAUDHARY</p>
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    
   );
 }
 

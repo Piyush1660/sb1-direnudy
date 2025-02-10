@@ -260,7 +260,7 @@ function LandingPage() {
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p className="mt-2 text-sm">JOIN CTRP AND BEGIN YOUR NEW STORY</p>
-            <p className="mt-2 text-sm">DEVELOPER : hey PIYUSH CHAUDHARY</p>
+            <p className="mt-2 text-sm">DEVELOPER : PIYUSH CHAUDHARY</p>
           </div>
         </div>
       </footer>

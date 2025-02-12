@@ -172,11 +172,13 @@ function LandingPage() {
                 Important Notes
               </h4>
               <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>Minimum age requirement: 15 years</li>
-                <li>Working microphone required</li>
-                <li>Previous RP experience preferred but not required</li>
-                <li>Must be fluent in English/Hindi</li>
-                <li>Character backstory required in application</li>
+                <li>Minimum age requirement: 16 years</li>                
+                <li>Previous RP experience is not Necessary</li> 
+                <li>Fill All the Form details Accordingly</li>                
+                <li>Character must have realistic names, using default or non-roleplay names is generally prohibited</li>
+                <li>Working Microphone required with Push-to-talk Enabled</li>
+                <li>Character Backstory must be Good and Give more Efforts in it</li>
+                <li>Must be Fluent in English/Hindi</li>
               </ul>
               <div className="mt-8 text-center">
                 <Link
@@ -260,7 +262,7 @@ function LandingPage() {
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p className="mt-2 text-sm">JOIN CTRP AND BEGIN YOUR NEW STORY</p>
-            <p className="mt-2 text-sm">DEVELOPER : PIYUSH CHAUDHARY</p>
+            <p className="mt-2 text-sm">CTRP MANAGEMENT</p>
           </div>
         </div>
       </footer>

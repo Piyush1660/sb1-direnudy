@@ -81,8 +81,8 @@ export function Rules() {
       </Link>
       <motion.div className="max-w-4xl mx-auto px-4 py-16" variants={staggerContainer}>
         <div className="text-center mb-16">
-          <motion.h1 className="text-6xl font-extrabold text-[#ff66c4] mb-6 shadow-lg" variants={slideUp}>Server Rules</motion.h1>
-          <motion.p className="text-gray-400 text-lg" variants={slideUp}>Please read and follow these rules to ensure a great experience for everyone.</motion.p>
+          <motion.h1 className="text-6xl font-extrabold text-[#ff66c4] mb-6 shadow-lg" variants={slideUp}>City Town Roleplay</motion.h1>
+          <motion.p className="text-gray-400 text-lg" variants={slideUp}>Please read CTRP Terms Rules and Regulation.</motion.p>
         </div>
 
         <div className="space-y-8">

@@ -128,7 +128,7 @@ function StaffApplication() {
               <input type="text" name="discordId" placeholder="Discord ID" value={formData.discordId} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
               <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
               <input type="text" name="timezone" placeholder="Timezone" value={formData.timezone} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
-              <input type="text" name="interviewtiming" placeholder="Your Free Timing For Interview" value={formData.interviewtiming} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              <input type="text" name="interviewtiming" placeholder="Interview Timing?" value={formData.interviewtiming} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
             </div>
 
             <div className="bg-white/5 p-8 rounded-xl space-y-6">

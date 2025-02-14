@@ -48,11 +48,12 @@ function LandingPage() {
             City Town RP
           </h1>
           <nav className="hidden md:flex space-x-8">
-            <a href="#about" className="hover:text-purple-400 transition-colors">About</a>
-            <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
-            <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a>
-            <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
             <Link to="/staff-application" className="hover:text-purple-400 transition-colors">Staff Form</Link>
+            <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
+            <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
+            <a href="#about" className="hover:text-purple-400 transition-colors">About</a>
+            <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a> 
+            
           </nav>
         </div>
       </div>
@@ -232,8 +233,7 @@ function LandingPage() {
             <div className="text-center">
               <h5 className="font-semibold mb-4">Quick Links</h5>
               <div className="space-y-2">
-                <a href="#about" className="block text-gray-400 hover:text-purple-400 transition-colors">About</a>
-                <a href="#features" className="block text-gray-400 hover:text-purple-400 transition-colors">Features</a>
+              
                 <a href="#whitelist" className="block text-gray-400 hover:text-purple-400 transition-colors">Whitelist</a>
               
               </div>

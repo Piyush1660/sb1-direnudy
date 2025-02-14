@@ -24,7 +24,7 @@ function StaffApplication() {
     setIsSubmitting(true);
 
     try {
-      const webhookUrl = "hhttps://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
+      const webhookUrl = "##https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
       const discordMessage = {
         embeds: [
           {

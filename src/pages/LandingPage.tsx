@@ -53,6 +53,7 @@ function LandingPage() {
             <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
             <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a>
             <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
+            <link to="/staff form" className="hover:text-purple-400 transition-colors">Staff form</link>
           </nav>
         </div>
       </div>

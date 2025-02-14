@@ -3,6 +3,8 @@ import {Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import WhitelistApplication from './pages/WhitelistApplication';
 import RulesPage from "./pages/RulesPage";
+import StaffApplication from './pages/StaffApplication';
+
 
 function App() {
   return (
@@ -11,6 +13,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/apply" element={<WhitelistApplication />} />
       <Route path="/rules" element={<RulesPage />} />
+      <Route path="/Staff form" element={<StaffApplication />} />
     </Routes>
   );
 };

@@ -8,12 +8,9 @@ function StaffApplication() {
     age: '',
     timezone: '',
     experience: '',
-    staffExperience: '',
+    reason: '',
     strengths: '',
-    handleRuleBreakers: '',
-    dealWithConflict: '',
-    availability: '',
-    whyStaff: '',
+    additionalInfo: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -31,7 +28,7 @@ function StaffApplication() {
         embeds: [
           {
             title: "New Staff Application",
-            color: 0xFFD700, // Gold color
+            color: 0x9C44FF,
             fields: [
               {
                 name: "📝 Personal Information",
@@ -39,38 +36,23 @@ function StaffApplication() {
                 inline: false
               },
               {
-                name: "🛠️ Previous Experience",
-                value: formData.experience || "No previous experience",
+                name: "💼 Experience",
+                value: formData.experience || "No prior experience provided",
                 inline: false
               },
               {
-                name: "🔧 Staff Experience",
-                value: formData.staffExperience || "No prior staff experience",
+                name: "🎯 Why Join as Staff?",
+                value: formData.reason,
                 inline: false
               },
               {
-                name: "💪 Strengths as Staff",
+                name: "💪 Strengths",
                 value: formData.strengths,
                 inline: false
               },
               {
-                name: "🚨 Handling Rule Breakers",
-                value: formData.handleRuleBreakers,
-                inline: false
-              },
-              {
-                name: "⚖️ Conflict Resolution",
-                value: formData.dealWithConflict,
-                inline: false
-              },
-              {
-                name: "🕒 Availability",
-                value: formData.availability,
-                inline: false
-              },
-              {
-                name: "❓ Why do you want to be staff?",
-                value: formData.whyStaff,
+                name: "📝 Additional Information",
+                value: formData.additionalInfo || "N/A",
                 inline: false
               }
             ],
@@ -84,71 +66,77 @@ function StaffApplication() {
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(discordMessage)
       });
 
-      if (!response.ok) throw new Error('Failed to send application');
+      if (!response.ok) {
+        throw new Error('Failed to send application');
+      }
 
-      alert('Application submitted successfully!');
+      alert('Application submitted successfully! Our team will review it.');
       setFormData({
         discordId: '',
         age: '',
         timezone: '',
         experience: '',
-        staffExperience: '',
+        reason: '',
         strengths: '',
-        handleRuleBreakers: '',
-        dealWithConflict: '',
-        availability: '',
-        whyStaff: '',
+        additionalInfo: ''
       });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('There was an error submitting your application. Please try again.');
+      alert('There was an error submitting your application. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white py-20">
+    <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
       <div className="container mx-auto px-4">
-        <Link to="/" className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 mb-8">
+        <Link to="/" className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8">
           <ArrowLeft className="w-5 h-5" />
           Back to Home
         </Link>
         
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
             Staff Application
           </h1>
           
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="bg-white/5 p-8 rounded-xl space-y-6">
               <h2 className="text-2xl font-semibold mb-6">Personal Information</h2>
-              <input type="text" name="discordId" required placeholder="Discord ID" value={formData.discordId} onChange={handleChange} className="input" />
-              <input type="number" name="age" required placeholder="Age" value={formData.age} onChange={handleChange} className="input" />
-              <input type="text" name="timezone" required placeholder="Timezone" value={formData.timezone} onChange={handleChange} className="input" />
+              <input type="text" name="discordId" placeholder="Discord ID" value={formData.discordId} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              <input type="text" name="timezone" placeholder="Timezone" value={formData.timezone} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
             </div>
 
             <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Staff Questions</h2>
-              <textarea name="experience" placeholder="Describe your previous roleplay experience" value={formData.experience} onChange={handleChange} className="textarea" />
-              <textarea name="staffExperience" placeholder="Do you have previous staff experience?" value={formData.staffExperience} onChange={handleChange} className="textarea" />
-              <textarea name="strengths" placeholder="What strengths do you bring to the staff team?" value={formData.strengths} onChange={handleChange} className="textarea" />
-              <textarea name="handleRuleBreakers" placeholder="How would you handle a player breaking the rules?" value={formData.handleRuleBreakers} onChange={handleChange} className="textarea" />
-              <textarea name="dealWithConflict" placeholder="How would you resolve a conflict between players?" value={formData.dealWithConflict} onChange={handleChange} className="textarea" />
-              <textarea name="availability" placeholder="What is your availability for moderation?" value={formData.availability} onChange={handleChange} className="textarea" />
-              <textarea name="whyStaff" placeholder="Why do you want to become a staff member?" value={formData.whyStaff} onChange={handleChange} className="textarea" />
+              <h2 className="text-2xl font-semibold mb-6">Experience & Motivation</h2>
+              <textarea name="experience" placeholder="Describe your experience" value={formData.experience} onChange={handleChange} className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              <textarea name="reason" placeholder="Why do you want to join?" value={formData.reason} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+            </div>
+
+            <div className="bg-white/5 p-8 rounded-xl space-y-6">
+              <h2 className="text-2xl font-semibold mb-6">Skills & Additional Info</h2>
+              <textarea name="strengths" placeholder="What are your strengths?" value={formData.strengths} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              <textarea name="additionalInfo" placeholder="Any additional information?" value={formData.additionalInfo} onChange={handleChange} className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
             </div>
 
             <div className="flex justify-end">
-              <button type="submit" disabled={isSubmitting} className={`button ${isSubmitting ? 'opacity-50' : ''}`}>
+              <button type="submit" disabled={isSubmitting} className={`inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 <Send className="w-5 h-5" />
                 {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </button>

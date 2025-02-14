@@ -13,7 +13,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/apply" element={<WhitelistApplication />} />
       <Route path="/rules" element={<RulesPage />} />
-      <Route path="/Staff form" element={<StaffApplication />} />
+      <Route path="/staff-application" element={<StaffApplication />} />
     </Routes>
   );
 };

@@ -49,11 +49,10 @@ function LandingPage() {
           </h1>
           <nav className="hidden md:flex space-x-8">
             <a href="#about" className="hover:text-purple-400 transition-colors">About</a>
-            <a href="#features" className="hover:text-purple-400 transition-colors">Features</a>
             <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
             <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a>
             <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
-            <link to="/staff form" className="hover:text-purple-400 transition-colors">Staff form</link>
+            <Link to="/staff-application" className="hover:text-purple-400 transition-colors">Staff Form</Link>
           </nav>
         </div>
       </div>

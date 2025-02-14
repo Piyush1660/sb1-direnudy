@@ -10,7 +10,8 @@ function StaffApplication() {
     experience: '',
     reason: '',
     strengths: '',
-    additionalInfo: ''
+    additionalInfo: '',
+    interviewtiming: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -23,7 +24,7 @@ function StaffApplication() {
     setIsSubmitting(true);
 
     try {
-      const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+      const webhookUrl = "https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
       const discordMessage = {
         embeds: [
           {
@@ -53,6 +54,11 @@ function StaffApplication() {
               {
                 name: "📝 Additional Information",
                 value: formData.additionalInfo || "N/A",
+                inline: false
+              },
+              {
+                name: "📝 Interview Timing",
+                value: formData.interviewtiming || "N/A",
                 inline: false
               }
             ],
@@ -84,11 +90,12 @@ function StaffApplication() {
         experience: '',
         reason: '',
         strengths: '',
-        additionalInfo: ''
+        additionalInfo: '',
+        interviewtiming: ''
       });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('There was an error submitting your application. Please try again later.');
+      alert('Staff Application Forms are Closed. Check out our discord #staff-announcement channel');
     } finally {
       setIsSubmitting(false);
     }
@@ -112,7 +119,7 @@ function StaffApplication() {
         
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-            Staff Application
+            CTRP | Staff Application
           </h1>
           
           <form onSubmit={handleSubmit} className="space-y-8">
@@ -121,6 +128,7 @@ function StaffApplication() {
               <input type="text" name="discordId" placeholder="Discord ID" value={formData.discordId} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
               <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
               <input type="text" name="timezone" placeholder="Timezone" value={formData.timezone} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              <input type="text" name="interviewtiming" placeholder="Your Free Timing For Interview" value={formData.interviewtiming} onChange={handleChange} required className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
             </div>
 
             <div className="bg-white/5 p-8 rounded-xl space-y-6">
@@ -138,7 +146,7 @@ function StaffApplication() {
             <div className="flex justify-end">
               <button type="submit" disabled={isSubmitting} className={`inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 <Send className="w-5 h-5" />
-                {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                {isSubmitting ? 'Submitting...' : 'Submit Application You will be Notified On #staff-interview Channel'}
               </button>
             </div>
           </form>

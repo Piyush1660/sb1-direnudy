@@ -146,7 +146,7 @@ function StaffApplication() {
             <div className="flex justify-end">
               <button type="submit" disabled={isSubmitting} className={`inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 <Send className="w-5 h-5" />
-                {isSubmitting ? 'Submitting...' : 'Submit Application You will be Notified On #staff-interview Channel'}
+                {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </button>
             </div>
           </form>

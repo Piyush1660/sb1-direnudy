@@ -51,7 +51,7 @@ function LandingPage() {
   // State for user dropdown visibility
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  // Effect to load user from localStorage on mount
+  // Load user from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem('discordUser');
     if (storedUser) {
@@ -63,7 +63,7 @@ function LandingPage() {
     }
   }, []);
 
-  // Effect to process the URL query parameter (if coming from OAuth redirect)
+  // Process URL query param if coming from OAuth redirect
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const userParam = params.get('discordUser');
@@ -72,7 +72,7 @@ function LandingPage() {
         const parsedUser = JSON.parse(userParam) as DiscordUser;
         setUser(parsedUser);
         localStorage.setItem('discordUser', JSON.stringify(parsedUser));
-        // Clean URL
+        // Clean the URL
         window.history.replaceState({}, document.title, window.location.pathname);
       } catch (error) {
         console.error("Error parsing discordUser from URL:", error);
@@ -80,7 +80,7 @@ function LandingPage() {
     }
   }, []);
 
-  // Function to initiate Discord OAuth2 flow
+  // Initiate Discord OAuth2 flow
   const handleDiscordLogin = () => {
     const clientId = '1326593383170576434'; // Your Discord Client ID
     const redirectUri = encodeURIComponent('https://citytownrp.netlify.app/.netlify/functions/discord-auth');
@@ -88,12 +88,12 @@ function LandingPage() {
     window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
   };
 
-  // Toggle the user dropdown visibility
+  // Toggle user dropdown visibility
   const handleUserClick = () => {
     setUserDropdownOpen((prev) => !prev);
   };
 
-  // Logout: clear user data from state and localStorage
+  // Logout
   const handleLogout = () => {
     localStorage.removeItem('discordUser');
     setUser(null);
@@ -131,7 +131,9 @@ function LandingPage() {
                 >
                   CTRP Applications
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`}
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      dropdownOpen ? 'rotate-180' : 'rotate-0'
+                    }`}
                   />
                 </button>
                 {dropdownOpen && (
@@ -335,13 +337,24 @@ function LandingPage() {
                 <li>Must be Fluent in English/Hindi</li>
               </ul>
               <div className="mt-8 text-center">
-                <Link
-                  to="/apply"
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-12 py-4 rounded-lg font-semibold text-lg transition-all"
-                >
-                  <CheckCircle className="w-6 h-6" />
-                  Apply for Whitelist
-                </Link>
+                {/* If logged in => "Apply for Whitelist", else => "Login with Discord to Apply" */}
+                {user ? (
+                  <Link
+                    to="/apply"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-12 py-4 rounded-lg font-semibold text-lg transition-all"
+                  >
+                    <CheckCircle className="w-6 h-6" />
+                    Apply for Whitelist
+                  </Link>
+                ) : (
+                  <button
+                    onClick={handleDiscordLogin}
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-12 py-4 rounded-lg font-semibold text-lg transition-all"
+                  >
+                    <CheckCircle className="w-6 h-6" />
+                    Login with Discord to Apply
+                  </button>
+                )}
               </div>
             </div>
           </div>

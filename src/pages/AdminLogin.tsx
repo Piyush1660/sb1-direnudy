@@ -12,18 +12,21 @@ function AdminLogin() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("https://citytownrp.netlify.app/api/admin/login", {
+      // Call your Netlify function for admin login.
+      // The function URL is: https://citytownrp.netlify.app/.netlify/functions/admin-login
+      const response = await fetch("https://citytownrp.netlify.app/.netlify/functions/admin-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // important to include cookies
         body: JSON.stringify({ username, password }),
       });
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         setErrorMsg(data.error || "Login failed");
         return;
       }
-      // On success, navigate to admin dashboard
+      // For this example, we store the token in localStorage.
+      // In production, consider storing it in an HTTP-only cookie.
+      localStorage.setItem("adminToken", data.token);
       navigate("/admin/dashboard");
     } catch (error) {
       console.error("Admin login error:", error);
@@ -33,41 +36,36 @@ function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] p-10 text-white">
-      <button onClick={() => navigate("/")} className="text-pink-400 mb-4">
-        Back to Home
-      </button>
-      <div className="max-w-md mx-auto bg-black/50 p-8 rounded-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center">Admin Login</h2>
-        {errorMsg && <p className="text-red-400 mb-4">{errorMsg}</p>}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-gray-300 mb-1">Username</label>
-            <input
-              className="w-full p-2 bg-gray-800 text-white rounded"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-300 mb-1">Password</label>
-            <input
-              className="w-full p-2 bg-gray-800 text-white rounded"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full py-2 mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded font-bold"
-          >
-            Login
-          </button>
-        </form>
-      </div>
+      <h2 className="text-3xl font-bold text-center mb-6">Admin Login</h2>
+      {errorMsg && <p className="text-red-400 text-center mb-4">{errorMsg}</p>}
+      <form onSubmit={handleLogin} className="max-w-md mx-auto space-y-4">
+        <div>
+          <label className="block text-gray-300 mb-1">Username</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full p-2 bg-gray-800 text-white rounded focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-gray-300 mb-1">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 bg-gray-800 text-white rounded focus:outline-none"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded font-bold"
+        >
+          Login
+        </button>
+      </form>
     </div>
   );
 }

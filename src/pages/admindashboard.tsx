@@ -5,9 +5,18 @@ import { useNavigate, Link } from "react-router-dom";
 function AdminDashboard() {
   const [data, setData] = useState("");
   const navigate = useNavigate();
+  const token = localStorage.getItem("adminToken");
 
   useEffect(() => {
-    fetch("https://citytownrp.netlify.app/api/admin/dashboard", {
+    // If no token exists, redirect to login
+    if (!token) {
+      navigate("/admin");
+      return;
+    }
+    // Fetch protected data from your backend (using the token)
+    // For example, you can send the token in the Authorization header:
+    fetch("https://citytownrp.netlify.app/.netlify/functions/admin-dashboard", {
+      headers: { Authorization: `Bearer ${token}` },
       credentials: "include",
     })
       .then((res) => {
@@ -18,7 +27,7 @@ function AdminDashboard() {
       })
       .then((data) => setData(data.data))
       .catch((err) => console.error("Error fetching admin data:", err));
-  }, [navigate]);
+  }, [navigate, token]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] p-10 text-white">

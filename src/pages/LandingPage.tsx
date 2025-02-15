@@ -121,10 +121,6 @@ function LandingPage() {
               City Town RP
             </h1>
 
-            <Link to="/AdminLogin" className="hover:text-purple-400 transition-colors">
-              Admin Panel
-            </Link> 
-
             {/* NAV */}
             <nav className="hidden md:flex space-x-8">
               {/* Dropdown for Application Form */}
@@ -152,6 +148,10 @@ function LandingPage() {
                   </div>
                 )}
               </div>
+             
+              <Link to="/AdminLogin" className="hover:text-purple-400 transition-colors">
+              Admin Panel
+              </Link> 
 
               <a href="#whitelist" className="hover:text-purple-400 transition-colors">
                 Whitelist
@@ -159,9 +159,6 @@ function LandingPage() {
               <Link to="/rules" className="hover:text-purple-400 transition-colors">
                 Rules
               </Link>
-              <a href="#about" className="hover:text-purple-400 transition-colors">
-                About
-              </a>
 
               {/* DISCORD LOGIN / USER INFO with Dropdown */}
               {!user ? (

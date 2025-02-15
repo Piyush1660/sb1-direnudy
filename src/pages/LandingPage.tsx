@@ -48,44 +48,56 @@ function LandingPage() {
 
   // Discord user state
   const [user, setUser] = useState<DiscordUser | null>(null);
+  // State for user dropdown visibility
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  // On initial load, check localStorage and URL params for Discord user data
+  // Effect to load user from localStorage on mount
   useEffect(() => {
-    // 1. Check if user data exists in localStorage
     const storedUser = localStorage.getItem('discordUser');
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error('Error parsing stored user data:', error);
+        console.error("Error parsing stored user data:", error);
       }
     }
+  }, []);
 
-    // 2. Check URL params for a new login (from the OAuth redirect)
+  // Effect to process the URL query parameter (if coming from OAuth redirect)
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const userParam = params.get('discordUser');
     if (userParam) {
       try {
         const parsedUser = JSON.parse(userParam) as DiscordUser;
         setUser(parsedUser);
-        // Store the user data in localStorage for persistence
         localStorage.setItem('discordUser', JSON.stringify(parsedUser));
-        // Remove the query parameter from the URL for a cleaner URL
+        // Clean URL
         window.history.replaceState({}, document.title, window.location.pathname);
-      } catch (err) {
-        console.error('Error parsing discordUser from URL:', err);
+      } catch (error) {
+        console.error("Error parsing discordUser from URL:", error);
       }
     }
   }, []);
 
   // Function to initiate Discord OAuth2 flow
   const handleDiscordLogin = () => {
-    const clientId = '1326593383170576434'; // Your numeric Discord Client ID
+    const clientId = '1326593383170576434'; // Your Discord Client ID
     const redirectUri = encodeURIComponent('https://citytownrp.netlify.app/.netlify/functions/discord-auth');
     const scope = encodeURIComponent('identify email');
-
-    // Redirect to Discord's OAuth2 page
     window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
+  };
+
+  // Toggle the user dropdown visibility
+  const handleUserClick = () => {
+    setUserDropdownOpen((prev) => !prev);
+  };
+
+  // Logout: clear user data from state and localStorage
+  const handleLogout = () => {
+    localStorage.removeItem('discordUser');
+    setUser(null);
+    setUserDropdownOpen(false);
   };
 
   // Scroll-triggered animations
@@ -119,9 +131,7 @@ function LandingPage() {
                 >
                   CTRP Applications
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      dropdownOpen ? 'rotate-180' : 'rotate-0'
-                    }`}
+                    className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`}
                   />
                 </button>
                 {dropdownOpen && (
@@ -146,8 +156,11 @@ function LandingPage() {
               <a href="#about" className="hover:text-purple-400 transition-colors">
                 About
               </a>
+              <a href="#join" className="hover:text-purple-400 transition-colors">
+                Join Us
+              </a>
 
-              {/* DISCORD LOGIN / USER INFO */}
+              {/* DISCORD LOGIN / USER INFO with Dropdown */}
               {!user ? (
                 <button
                   onClick={handleDiscordLogin}
@@ -156,13 +169,26 @@ function LandingPage() {
                   Login with Discord
                 </button>
               ) : (
-                <div className="flex items-center gap-2 ml-4">
-                  <img
-                    src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
-                    alt="Discord Avatar"
-                    className="w-8 h-8 rounded-full"
-                  />
-                  <span>{user.username}</span>
+                <div className="relative ml-4">
+                  <button onClick={handleUserClick} className="flex items-center gap-2">
+                    <img
+                      src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+                      alt="Discord Avatar"
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <span>{user.username}</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                  {userDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-32 bg-black/70 rounded-md shadow-lg">
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 hover:text-purple-400"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </nav>

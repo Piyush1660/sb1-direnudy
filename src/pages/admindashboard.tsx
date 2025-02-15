@@ -8,12 +8,10 @@ function AdminDashboard() {
   const token = localStorage.getItem("adminToken");
 
   useEffect(() => {
-    // If no token exists, redirect to login
     if (!token) {
       navigate("/admin");
       return;
     }
-    // Fetch protected data from your backend using the token
     fetch("https://citytownrp.netlify.app/.netlify/functions/admin-dashboard", {
       headers: { Authorization: `Bearer ${token}` },
       credentials: "include",

@@ -12,8 +12,6 @@ function AdminLogin() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      // Call your Netlify function for admin login.
-      // The function URL is: https://citytownrp.netlify.app/.netlify/functions/admin-login
       const response = await fetch("https://citytownrp.netlify.app/.netlify/functions/admin-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -24,8 +22,6 @@ function AdminLogin() {
         setErrorMsg(data.error || "Login failed");
         return;
       }
-      // For this example, we store the token in localStorage.
-      // In production, consider storing it in an HTTP-only cookie.
       localStorage.setItem("adminToken", data.token);
       navigate("/admin/dashboard");
     } catch (error) {

@@ -13,8 +13,7 @@ function AdminDashboard() {
       navigate("/admin");
       return;
     }
-    // Fetch protected data from your backend (using the token)
-    // For example, you can send the token in the Authorization header:
+    // Fetch protected data from your backend using the token
     fetch("https://citytownrp.netlify.app/.netlify/functions/admin-dashboard", {
       headers: { Authorization: `Bearer ${token}` },
       credentials: "include",

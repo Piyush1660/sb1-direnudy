@@ -9,7 +9,7 @@ const handler: Handler = async (event) => {
 
   const clientId = process.env.DISCORD_CLIENT_ID;
   const clientSecret = process.env.DISCORD_CLIENT_SECRET;
-  const redirectUri = process.env.DISCORD_REDIRECT_URI; // e.g. https://citytownrp.netlify.app/.netlify/functions/discord-auth
+  const redirectUri = process.env.DISCORD_REDIRECT_URI; // e.g. "https://citytownrp.netlify.app/.netlify/functions/discord-auth"
 
   try {
     // 1. Exchange the code for an access token
@@ -29,13 +29,12 @@ const handler: Handler = async (event) => {
 
     const accessToken = tokenResponse.data.access_token;
 
-    // 2. Retrieve user info
+    // 2. Retrieve user info from Discord
     const userResponse = await axios.get('https://discord.com/api/users/@me', {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    // 3. Instead of returning JSON, do a 302 redirect to your main page
-    //    Attach user data in the query param: ?discordUser=...
+    // 3. 302 redirect back to your site with ?discordUser=...
     const userData = JSON.stringify(userResponse.data);
 
     return {

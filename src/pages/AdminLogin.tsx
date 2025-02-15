@@ -12,7 +12,7 @@ function AdminLogin() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("https://your-backend-domain.com/api/admin/login", {
+      const response = await fetch("https://citytownrp.netlify.app/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // important to include cookies

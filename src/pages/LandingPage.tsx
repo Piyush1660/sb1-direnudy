@@ -57,7 +57,7 @@ function LandingPage() {
       try {
         const parsedUser = JSON.parse(userParam) as DiscordUser;
         setUser(parsedUser);
-        // Optional: remove the query param from the URL for cleanliness
+        // Optional: Remove the query param from the URL for cleanliness
         window.history.replaceState({}, document.title, window.location.pathname);
       } catch (err) {
         console.error('Error parsing discordUser:', err);
@@ -67,14 +67,15 @@ function LandingPage() {
 
   // Function to initiate Discord OAuth2 flow
   const handleDiscordLogin = () => {
-    // Use your REACT_APP_DISCORD_CLIENT_ID or hard-code the client ID
-    const clientId = process.env.REACT_APP_DISCORD_CLIENT_ID || 'YOUR_DISCORD_CLIENT_ID';
-    // Must match your Netlify Function endpoint
+    // Optionally, use an environment variable for your client ID:
+    // const clientId = process.env.REACT_APP_DISCORD_CLIENT_ID || 'YOUR_DISCORD_CLIENT_ID';
+    // In this example, we use your actual client ID directly:
+    const clientId = '1326593383170576434';
     const redirectUri = encodeURIComponent('https://citytownrp.netlify.app/.netlify/functions/discord-auth');
     const scope = encodeURIComponent('identify email');
 
-    // Redirect to Discord's OAuth2 page
-    window.location.href = "https://discord.com/oauth2/authorize?client_id=1326593383170576434&response_type=code&redirect_uri=https%3A%2F%2Fcitytownrp.netlify.app%2F.netlify%2Ffunctions%2Fdiscord-auth&scope=identify+email";
+    // Redirect to Discord's OAuth2 page using your complete URL:
+    window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
   };
 
   // Scroll-triggered animations

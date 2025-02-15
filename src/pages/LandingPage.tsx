@@ -59,7 +59,7 @@ function LandingPage() {
                   onClick={toggleDropdown}
                   className="hover:text-purple-400 transition-colors focus:outline-none flex items-center gap-1"
                 >
-                  CTRP Official Form
+                  CTRP Applications
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`}
                   />

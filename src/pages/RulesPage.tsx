@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Shield, AlertCircle, Users, MessageSquare, Handshake, Siren, ArrowLeft } from "lucide-react";
+import {
+  Shield,
+  AlertCircle,
+  Users,
+  MessageSquare,
+  Siren,
+  ArrowLeft,
+} from "lucide-react";
 
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -74,20 +81,50 @@ const sections = [
 ];
 
 export function Rules() {
+  // Scroll to top when the component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <motion.div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] p-10" initial="hidden" animate="visible" variants={fadeIn}>
-      <Link to="/" className="inline-flex items-center gap-2 text-[#ff66c4] hover:text-[#d94fc7] mb-8 font-bold text-lg">
+    <motion.div
+      className="min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] p-10"
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+    >
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-[#ff66c4] hover:text-[#d94fc7] mb-8 font-bold text-lg"
+      >
         <ArrowLeft className="w-5 h-5" /> Back to Home
       </Link>
-      <motion.div className="max-w-4xl mx-auto px-4 py-16" variants={staggerContainer}>
+      <motion.div
+        className="max-w-4xl mx-auto px-4 py-16"
+        variants={staggerContainer}
+      >
         <div className="text-center mb-16">
-          <motion.h1 className="text-6xl font-extrabold text-[#ff66c4] mb-6 shadow-lg" variants={slideUp}>City Town Roleplay</motion.h1>
-          <motion.p className="text-gray-400 text-lg" variants={slideUp}>Please read CTRP Terms Rules and Regulation.</motion.p>
+          <motion.h1
+            className="text-6xl font-extrabold text-[#ff66c4] mb-6 shadow-lg"
+            variants={slideUp}
+          >
+            City Town Roleplay
+          </motion.h1>
+          <motion.p
+            className="text-gray-400 text-lg"
+            variants={slideUp}
+          >
+            Please read CTRP Terms Rules and Regulation.
+          </motion.p>
         </div>
 
         <div className="space-y-8">
           {sections.map(({ icon: Icon, title, rules }, index) => (
-            <motion.div key={index} className="bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800" variants={slideUp}>
+            <motion.div
+              key={index}
+              className="bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800"
+              variants={slideUp}
+            >
               <div className="flex items-center gap-3 mb-6">
                 <Icon className="text-[#ff66c4]" size={24} />
                 <h2 className="text-3xl font-bold text-white">{title}</h2>

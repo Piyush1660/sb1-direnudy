@@ -2,19 +2,17 @@ import { Handler } from '@netlify/functions';
 import axios from 'axios';
 
 const handler: Handler = async (event) => {
-  // 1. Grab the "code" query parameter from the URL
   const code = event.queryStringParameters?.code;
   if (!code) {
-    return { statusCode: 400, body: 'Missing "code" parameter' };
+    return { statusCode: 400, body: 'Missing code parameter' };
   }
 
-  // 2. Read environment variables from Netlify’s environment (you’ll set them in the Netlify dashboard)
   const clientId = process.env.DISCORD_CLIENT_ID;
   const clientSecret = process.env.DISCORD_CLIENT_SECRET;
-  const redirectUri = process.env.DISCORD_REDIRECT_URI; // e.g. "https://citytownrp.netlify.app/.netlify/functions/discord-auth"
+  const redirectUri = process.env.DISCORD_REDIRECT_URI; // e.g. https://citytownrp.netlify.app/.netlify/functions/discord-auth
 
   try {
-    // 3. Exchange the code for an access token
+    // 1. Exchange the code for an access token
     const tokenResponse = await axios.post(
       'https://discord.com/api/oauth2/token',
       new URLSearchParams({
@@ -24,21 +22,28 @@ const handler: Handler = async (event) => {
         code,
         redirect_uri: redirectUri!,
       }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      }
     );
 
     const accessToken = tokenResponse.data.access_token;
 
-    // 4. Retrieve user data from Discord
+    // 2. Retrieve user info
     const userResponse = await axios.get('https://discord.com/api/users/@me', {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    // 5. Return the user data as JSON
-    // In production, you may set a secure cookie or JWT instead of returning raw data
+    // 3. Instead of returning JSON, do a 302 redirect to your main page
+    //    Attach user data in the query param: ?discordUser=...
+    const userData = JSON.stringify(userResponse.data);
+
     return {
-      statusCode: 200,
-      body: JSON.stringify(userResponse.data),
+      statusCode: 302,
+      headers: {
+        Location: `https://citytownrp.netlify.app/?discordUser=${encodeURIComponent(userData)}`,
+      },
+      body: '',
     };
   } catch (error: any) {
     console.error('Error in OAuth callback:', error.response?.data || error.message);

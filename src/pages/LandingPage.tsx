@@ -49,25 +49,37 @@ function LandingPage() {
   // Discord user state
   const [user, setUser] = useState<DiscordUser | null>(null);
 
-  // Parse the "discordUser" param from the URL if present
+  // On initial load, check localStorage and URL params for Discord user data
   useEffect(() => {
+    // 1. Check if user data exists in localStorage
+    const storedUser = localStorage.getItem('discordUser');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Error parsing stored user data:', error);
+      }
+    }
+
+    // 2. Check URL params for a new login (from the OAuth redirect)
     const params = new URLSearchParams(window.location.search);
     const userParam = params.get('discordUser');
     if (userParam) {
       try {
         const parsedUser = JSON.parse(userParam) as DiscordUser;
         setUser(parsedUser);
-        // Optional: Remove the query param from the URL for cleanliness
+        // Store the user data in localStorage for persistence
+        localStorage.setItem('discordUser', JSON.stringify(parsedUser));
+        // Remove the query parameter from the URL for a cleaner URL
         window.history.replaceState({}, document.title, window.location.pathname);
       } catch (err) {
-        console.error('Error parsing discordUser:', err);
+        console.error('Error parsing discordUser from URL:', err);
       }
     }
   }, []);
 
   // Function to initiate Discord OAuth2 flow
   const handleDiscordLogin = () => {
-    // In production, you might store this in REACT_APP_DISCORD_CLIENT_ID
     const clientId = '1326593383170576434'; // Your numeric Discord Client ID
     const redirectUri = encodeURIComponent('https://citytownrp.netlify.app/.netlify/functions/discord-auth');
     const scope = encodeURIComponent('identify email');

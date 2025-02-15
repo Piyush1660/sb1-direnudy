@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { MessageSquare, Github, CheckCircle, AlertCircle, Clock } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { MessageSquare, Github, CheckCircle, AlertCircle, Clock,  ChevronDown  } from 'lucide-react';
 import 'animate.css';
 import { Link } from 'react-router-dom';
 
@@ -39,6 +39,11 @@ function LandingPage() {
   useScrollAnimation(joinRef);
   useScrollAnimation(footerRef);
 
+  // Dropdown state for Application Form
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // Ensure toggleDropdown is defined before it's used
+   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white">
     <header className="bg-black/50 backdrop-blur-sm fixed w-full z-50">
@@ -48,7 +53,30 @@ function LandingPage() {
             City Town RP
           </h1>
           <nav className="hidden md:flex space-x-8">
-            <Link to="/staff-application" className="hover:text-purple-400 transition-colors">Staff Form</Link>
+              {/* Dropdown for Application Form */}
+              <div className="relative">
+                <button
+                  onClick={toggleDropdown}
+                  className="hover:text-purple-400 transition-colors focus:outline-none flex items-center gap-1"
+                >
+                  CTRP Official Form
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`}
+                  />
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 bg-black/70 rounded-md shadow-lg">
+                    <Link
+                      to="/staff-application"
+                      className="block px-4 py-2 hover:text-purple-400 transition-colors"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      Staff Form
+                    </Link>
+                  </div>
+                )}
+              </div>
+
             <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
             <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
             <a href="#about" className="hover:text-purple-400 transition-colors">About</a>

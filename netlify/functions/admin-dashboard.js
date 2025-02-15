@@ -1,7 +1,7 @@
-// netlify/functions/admin-dashboard.ts
-import jwt from "jsonwebtoken";
+// netlify/functions/admin-dashboard.js
+const jwt = require("jsonwebtoken");
 
-export const handler = async (event: any, context: any) => {
+exports.handler = async (event, context) => {
   // Retrieve the Authorization header (case-insensitive)
   const authHeader = event.headers.authorization || event.headers.Authorization;
   if (!authHeader) {
@@ -11,12 +11,11 @@ export const handler = async (event: any, context: any) => {
     };
   }
 
-  // Expect header in the format "Bearer <token>"
+  // Expect the header format "Bearer <token>"
   const token = authHeader.split(" ")[1];
   try {
-    // Use the non-null assertion operator (!) to tell TypeScript that JWT_SECRET exists
-    jwt.verify(token, process.env.JWT_SECRET!);
-    // If verification is successful, return your protected data.
+    jwt.verify(token, process.env.JWT_SECRET);
+    // If the token is valid, return protected data.
     return {
       statusCode: 200,
       body: JSON.stringify({ data: "Secret admin dashboard data." }),

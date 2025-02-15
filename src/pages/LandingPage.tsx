@@ -3,6 +3,12 @@ import { MessageSquare, Github, CheckCircle, AlertCircle, Clock,  ChevronDown  }
 import 'animate.css';
 import { Link } from 'react-router-dom';
 
+interface DiscordUser {
+  id: string;
+  username: string;
+  avatar: string;
+}
+
 // Helper function for adding scroll-triggered animations with explicit ref typing
 const useScrollAnimation = (ref: React.RefObject<HTMLElement>) => {
   useEffect(() => {
@@ -31,6 +37,28 @@ function LandingPage() {
   const whitelistRef = useRef<HTMLElement>(null);
   const joinRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
+  const [user, setUser] = useState<DiscordUser | null>(null);
+
+// 1. Check if user data is in the URL (the function appended ?discordUser=...).
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const userParam = params.get('discordUser');
+  if (userParam) {
+    const parsedUser = JSON.parse(userParam) as DiscordUser;
+    setUser(parsedUser);
+    // (Optional) Remove the query param from the URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}, []);
+
+  const handleDiscordLogin = () => {
+  // The client ID can be in a .env file with REACT_APP_ prefix, or hard-coded if you prefer.
+  const clientId = process.env.REACT_APP_DISCORD_CLIENT_ID;
+  const redirectUri = encodeURIComponent('https://citytownrp.netlify.app/.netlify/functions/discord-auth');
+  const scope = encodeURIComponent('identify email');
+
+  window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
+};
 
   // Scroll-triggered animations
   useScrollAnimation(aboutRef);
@@ -86,6 +114,25 @@ function LandingPage() {
         </div>
       </div>
     </header>
+
+    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+      <h1>City Town RP</h1>
+      {!user ? (
+        <button onClick={handleDiscordLogin} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
+          Login with Discord
+        </button>
+      ) : (
+        <div>
+          <img
+            src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+            alt="Discord Avatar"
+            width={80}
+            style={{ borderRadius: '50%' }}
+          />
+          <p>Welcome, {user.username}!</p>
+        </div>
+      )}
+    </div>
 
       <section className="pt-32 pb-20 px-4" ref={aboutRef}>
         <div className="container mx-auto text-center">

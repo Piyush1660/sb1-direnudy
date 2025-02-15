@@ -146,9 +146,6 @@ function LandingPage() {
               <a href="#about" className="hover:text-purple-400 transition-colors">
                 About
               </a>
-              <a href="#join" className="hover:text-purple-400 transition-colors">
-                Join Us
-              </a>
 
               {/* DISCORD LOGIN / USER INFO */}
               {!user ? (
@@ -181,7 +178,7 @@ function LandingPage() {
           </h2>
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__slow animate__delay-1s">
             Step into a meticulously crafted roleplay experience where your character's story
-            shapes our vibrant city. Join our whitelisted community for quality RP.
+            shapes our vibrant city.
           </p>
           <div className="flex justify-center gap-6">
             <a

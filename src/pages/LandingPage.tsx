@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MessageSquare, Github, CheckCircle, AlertCircle, Clock,  ChevronDown  } from 'lucide-react';
+import {
+  MessageSquare,
+  Github,
+  CheckCircle,
+  AlertCircle,
+  Clock,
+  ChevronDown
+} from 'lucide-react';
 import 'animate.css';
 import { Link } from 'react-router-dom';
 
@@ -30,35 +37,45 @@ const useScrollAnimation = (ref: React.RefObject<HTMLElement>) => {
     };
   }, [ref]);
 };
- 
+
 function LandingPage() {
+  // Refs for scroll-triggered animations
   const aboutRef = useRef<HTMLElement>(null);
   const featuresRef = useRef<HTMLElement>(null);
   const whitelistRef = useRef<HTMLElement>(null);
   const joinRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
+
+  // Discord user state
   const [user, setUser] = useState<DiscordUser | null>(null);
 
-// 1. Check if user data is in the URL (the function appended ?discordUser=...).
-useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-  const userParam = params.get('discordUser');
-  if (userParam) {
-    const parsedUser = JSON.parse(userParam) as DiscordUser;
-    setUser(parsedUser);
-    // (Optional) Remove the query param from the URL
-    window.history.replaceState({}, document.title, window.location.pathname);
-  }
-}, []);
+  // Parse the "discordUser" param from the URL if present
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const userParam = params.get('discordUser');
+    if (userParam) {
+      try {
+        const parsedUser = JSON.parse(userParam) as DiscordUser;
+        setUser(parsedUser);
+        // Optional: remove the query param from the URL for cleanliness
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (err) {
+        console.error('Error parsing discordUser:', err);
+      }
+    }
+  }, []);
 
+  // Function to initiate Discord OAuth2 flow
   const handleDiscordLogin = () => {
-  // The client ID can be in a .env file with REACT_APP_ prefix, or hard-coded if you prefer.
-  const clientId = process.env.REACT_APP_DISCORD_CLIENT_ID;
-  const redirectUri = encodeURIComponent('https://citytownrp.netlify.app/.netlify/functions/discord-auth');
-  const scope = encodeURIComponent('identify email');
+    // Use your REACT_APP_DISCORD_CLIENT_ID or hard-code the client ID
+    const clientId = process.env.REACT_APP_DISCORD_CLIENT_ID || 'YOUR_DISCORD_CLIENT_ID';
+    // Must match your Netlify Function endpoint
+    const redirectUri = encodeURIComponent('https://citytownrp.netlify.app/.netlify/functions/discord-auth');
+    const scope = encodeURIComponent('identify email');
 
-  window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
-};
+    // Redirect to Discord's OAuth2 page
+    window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
+  };
 
   // Scroll-triggered animations
   useScrollAnimation(aboutRef);
@@ -69,18 +86,20 @@ useEffect(() => {
 
   // Dropdown state for Application Form
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // Ensure toggleDropdown is defined before it's used
-   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white">
-    <header className="bg-black/50 backdrop-blur-sm fixed w-full z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-            City Town RP
-          </h1>
-          <nav className="hidden md:flex space-x-8">
+      {/* HEADER */}
+      <header className="bg-black/50 backdrop-blur-sm fixed w-full z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+              City Town RP
+            </h1>
+
+            {/* NAV */}
+            <nav className="hidden md:flex space-x-8">
               {/* Dropdown for Application Form */}
               <div className="relative">
                 <button
@@ -89,7 +108,9 @@ useEffect(() => {
                 >
                   CTRP Applications
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`}
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      dropdownOpen ? 'rotate-180' : 'rotate-0'
+                    }`}
                   />
                 </button>
                 {dropdownOpen && (
@@ -105,55 +126,63 @@ useEffect(() => {
                 )}
               </div>
 
-            <a href="#whitelist" className="hover:text-purple-400 transition-colors">Whitelist</a>
-            <Link to="/rules" className="hover:text-purple-400 transition-colors">Rules</Link>
-            <a href="#about" className="hover:text-purple-400 transition-colors">About</a>
-            <a href="#join" className="hover:text-purple-400 transition-colors">Join Us</a> 
-            
-          </nav>
-        </div>
-      </div>
-    </header>
+              <a href="#whitelist" className="hover:text-purple-400 transition-colors">
+                Whitelist
+              </a>
+              <Link to="/rules" className="hover:text-purple-400 transition-colors">
+                Rules
+              </Link>
+              <a href="#about" className="hover:text-purple-400 transition-colors">
+                About
+              </a>
+              <a href="#join" className="hover:text-purple-400 transition-colors">
+                Join Us
+              </a>
 
-    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-      <h1>City Town RP</h1>
-      {!user ? (
-        <button onClick={handleDiscordLogin} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
-          Login with Discord
-        </button>
-      ) : (
-        <div>
-          <img
-            src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
-            alt="Discord Avatar"
-            width={80}
-            style={{ borderRadius: '50%' }}
-          />
-          <p>Welcome, {user.username}!</p>
+              {/* DISCORD LOGIN / USER INFO */}
+              {!user ? (
+                <button
+                  onClick={handleDiscordLogin}
+                  className="hover:text-purple-400 transition-colors ml-4"
+                >
+                  Login with Discord
+                </button>
+              ) : (
+                <div className="flex items-center gap-2 ml-4">
+                  <img
+                    src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+                    alt="Discord Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span>{user.username}</span>
+                </div>
+              )}
+            </nav>
+          </div>
         </div>
-      )}
-    </div>
+      </header>
 
+      {/* MAIN CONTENT */}
       <section className="pt-32 pb-20 px-4" ref={aboutRef}>
         <div className="container mx-auto text-center">
           <h2 className="text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate__animated animate__fadeInUp animate__slow">
             Welcome to City Town RP
           </h2>
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__slow animate__delay-1s">
-            Step into a meticulously crafted roleplay experience where your character's story shapes our vibrant city. 
-            Join our whitelisted community for quality RP.
+            Step into a meticulously crafted roleplay experience where your character's story
+            shapes our vibrant city. Join our whitelisted community for quality RP.
           </p>
           <div className="flex justify-center gap-6">
-            <a 
-              href="#whitelist" 
+            <a
+              href="#whitelist"
               className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all animate__animated animate__fadeInUp animate__slow animate__delay-2s"
             >
               <CheckCircle className="w-5 h-5" />
               Apply Now
             </a>
-            <a 
-              href="https://discord.gg/6xgAJ9pnAZ" 
-              target="_blank" 
+            <a
+              href="https://discord.gg/6xgAJ9pnAZ"
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2] hover:bg-[#4752C4] px-8 py-3 rounded-lg font-semibold transition-colors animate__animated animate__fadeInUp animate__slow animate__delay-2s"
             >
@@ -172,19 +201,28 @@ useEffect(() => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all animate__animated animate__fadeInUp animate__slow">
               <h4 className="text-2xl font-semibold mb-4 text-purple-400">Quality Roleplay</h4>
-              <p className="text-gray-300">Curated whitelisted community ensuring high-quality RP experiences and interactions.</p>
+              <p className="text-gray-300">
+                Curated whitelisted community ensuring high-quality RP experiences and
+                interactions.
+              </p>
             </div>
             <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all animate__animated animate__fadeInUp animate__slow">
               <h4 className="text-2xl font-semibold mb-4 text-purple-400">Active Community</h4>
-              <p className="text-gray-300">Join our thriving community of dedicated roleplayers and make lasting connections.</p>
+              <p className="text-gray-300">
+                Join our thriving community of dedicated roleplayers and make lasting
+                connections.
+              </p>
             </div>
             <div className="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:transform hover:-translate-y-1 transition-all animate__animated animate__fadeInUp animate__slow">
               <h4 className="text-2xl font-semibold mb-4 text-purple-400">Custom Economy</h4>
-              <p className="text-gray-300">Balanced economy system with unique jobs and business opportunities.</p>
+              <p className="text-gray-300">
+                Balanced economy system with unique jobs and business opportunities.
+              </p>
             </div>
           </div>
         </div>
       </section>
+
       <section id="about" className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -192,9 +230,9 @@ useEffect(() => {
               About City Town RP
             </h3>
             <p className="text-xl text-gray-300 mb-8">
-              CTRP is a premier FiveM roleplay community dedicated to providing the most immersive and 
-              enjoyable RP experience possible. Our server features custom scripts, unique jobs, and a 
-              dedicated staff team to ensure the best possible environment for our players.
+              CTRP is a premier FiveM roleplay community dedicated to providing the most immersive
+              and enjoyable RP experience possible. Our server features custom scripts, unique jobs,
+              and a dedicated staff team to ensure the best possible environment for our players.
             </p>
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div className="p-6">
@@ -213,6 +251,7 @@ useEffect(() => {
           </div>
         </div>
       </section>
+
       <section id="whitelist" className="py-20" ref={whitelistRef}>
         <div className="container mx-auto px-4">
           <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate__animated animate__fadeInUp animate__slow animate__delay-1s">
@@ -248,12 +287,17 @@ useEffect(() => {
                 Important Notes
               </h4>
               <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>Minimum age requirement: 16 years</li>                
-                <li>Previous RP experience is not Necessary</li> 
-                <li>Fill All the Form details Accordingly</li>                
-                <li>Character must have realistic names, using default or non-roleplay names is generally prohibited</li>
+                <li>Minimum age requirement: 16 years</li>
+                <li>Previous RP experience is not Necessary</li>
+                <li>Fill All the Form details Accordingly</li>
+                <li>
+                  Character must have realistic names, using default or non-roleplay names is
+                  generally prohibited
+                </li>
                 <li>Working Microphone required with Push-to-talk Enabled</li>
-                <li>Character Backstory must be Good and Give more Efforts in it</li>
+                <li>
+                  Character Backstory must be Good and Give more Efforts in it
+                </li>
                 <li>Must be Fluent in English/Hindi</li>
               </ul>
               <div className="mt-8 text-center">
@@ -264,15 +308,11 @@ useEffect(() => {
                   <CheckCircle className="w-6 h-6" />
                   Apply for Whitelist
                 </Link>
- 
               </div>
             </div>
           </div>
         </div>
       </section>
-
-     
-
 
       <section id="join" className="py-20" ref={joinRef}>
         <div className="container mx-auto px-4 text-center">
@@ -280,12 +320,13 @@ useEffect(() => {
             Ready to Start Your Journey?
           </h3>
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__slow animate__delay-1s">
-            Join our Discord server to begin the whitelisting process and become part of our thriving roleplay community.
+            Join our Discord server to begin the whitelisting process and become part of our
+            thriving roleplay community.
           </p>
           <div className="flex justify-center gap-6">
-            <a 
-              href="https://discord.gg/6xgAJ9pnAZ" 
-              target="_blank" 
+            <a
+              href="https://discord.gg/6xgAJ9pnAZ"
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#5865F2] hover:bg-[#4752C4] px-12 py-4 rounded-lg font-semibold text-lg transition-colors animate__animated animate__fadeInUp animate__slow animate__delay-1s"
             >
@@ -308,25 +349,25 @@ useEffect(() => {
             <div className="text-center">
               <h5 className="font-semibold mb-4">Quick Links</h5>
               <div className="space-y-2">
-              
-                <a href="#whitelist" className="block text-gray-400 hover:text-purple-400 transition-colors">Whitelist</a>
-              
+                <a href="#whitelist" className="block text-gray-400 hover:text-purple-400 transition-colors">
+                  Whitelist
+                </a>
               </div>
             </div>
             <div className="text-center md:text-right">
               <h5 className="font-semibold mb-4">Connect With Us</h5>
               <div className="flex justify-center md:justify-end space-x-6">
-                <a 
-                  href="https://discord.gg/6xgAJ9pnAZ" 
-                  target="_blank" 
+                <a
+                  href="https://discord.gg/6xgAJ9pnAZ"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-[#5865F2] transition-colors"
                 >
                   <MessageSquare className="w-6 h-6" />
                 </a>
-                <a 
-                  href="https://github.com/citytownrp" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/citytownrp"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
@@ -341,8 +382,7 @@ useEffect(() => {
           </div>
         </div>
       </footer>
-      </div>
-    
+    </div>
   );
 }
 

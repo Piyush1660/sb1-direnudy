@@ -74,7 +74,7 @@ function LandingPage() {
     const scope = encodeURIComponent('identify email');
 
     // Redirect to Discord's OAuth2 page
-    window.location.href = `https://discord.com/oauth2/authorize?client_id=1326593383170576434&response_type=code&redirect_uri=https%3A%2F%2Fcitytownrp.netlify.app%2F.netlify%2Ffunctions%2Fdiscord-auth&scope=identify+email`;
+    window.location.href = "https://discord.com/oauth2/authorize?client_id=1326593383170576434&response_type=code&redirect_uri=https%3A%2F%2Fcitytownrp.netlify.app%2F.netlify%2Ffunctions%2Fdiscord-auth&scope=identify+email";
   };
 
   // Scroll-triggered animations

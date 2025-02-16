@@ -26,7 +26,7 @@ const AdminDashboard: React.FC = () => {
       setIsStaffFormOpen(newState);
 
       await axios.post(
-        '/api/admin/staff-form-status',
+        '/.netlify/functions/staff-form-status',
         { isStaffFormOpen: newState },
         {
           headers: {

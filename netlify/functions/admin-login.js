@@ -1,5 +1,6 @@
+// admin-login.js
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs"; // Use bcryptjs for better compatibility
+import bcrypt from "bcryptjs";
 
 export const handler = async (event) => {
   // Allow only POST requests
@@ -47,6 +48,7 @@ export const handler = async (event) => {
   // Log the environment variables for debugging (remove in production)
   console.log("Admin Username:", adminUsername);
   console.log("Admin Password Hash:", adminPasswordHash);
+  console.log("Attempting login for username:", username);
 
   if (username !== adminUsername) {
     return {
@@ -60,6 +62,8 @@ export const handler = async (event) => {
   }
 
   const isPasswordValid = await bcrypt.compare(password, adminPasswordHash);
+  console.log("Is password valid:", isPasswordValid);
+
   if (!isPasswordValid) {
     return {
       statusCode: 401,

@@ -20,13 +20,26 @@ const AdminLogin: React.FC = () => {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
-
+      // Check if the response is OK
       if (!response.ok) {
-        setErrorMsg(data.error || "Login failed");
+        // Attempt to parse the error response
+        const errorData = await response.text(); // Use text() to avoid JSON parsing errors
+        let errorMessage = "Login failed";
+
+        // Try to parse the error response as JSON if possible
+        try {
+          const jsonErrorData = JSON.parse(errorData);
+          errorMessage = jsonErrorData.error || "Login failed";
+        } catch (jsonError) {
+          // If parsing fails, use the plain text response
+          errorMessage = errorData;
+        }
+
+        setErrorMsg(errorMessage);
         return;
       }
 
+      const data = await response.json(); // Parse the successful response
       localStorage.setItem("adminToken", data.token);
       navigate("/admin/dashboard");
     } catch (error) {

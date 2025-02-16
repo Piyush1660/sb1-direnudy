@@ -145,7 +145,7 @@ function LandingPage() {
                       </Link>
                     ) : (
                       <div className="block px-4 py-2 text-gray-400 cursor-not-allowed">
-                        Staff Form Closed
+                        Staff Form 🚫
                       </div>
                     )}
                   </div>

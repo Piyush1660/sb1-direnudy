@@ -15,7 +15,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const { data } = await axios.get('/.netlify/functions/notifications');
+        const { data } = await axios.get('/api/notifications');
         console.log(data); // Debugging line to inspect the fetched data
 
         if (Array.isArray(data)) {

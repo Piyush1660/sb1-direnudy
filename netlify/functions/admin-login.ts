@@ -1,10 +1,15 @@
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs"; // Use bcryptjs for better compatibility
 
 export const handler = async (event: any) => {
+  // Allow only POST requests
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
       body: JSON.stringify({ error: "Method Not Allowed" }),
     };
   }
@@ -15,6 +20,10 @@ export const handler = async (event: any) => {
   } catch (err) {
     return {
       statusCode: 400,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
       body: JSON.stringify({ error: "Invalid request body" }),
     };
   }
@@ -23,6 +32,10 @@ export const handler = async (event: any) => {
   if (!username || !password) {
     return {
       statusCode: 400,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
       body: JSON.stringify({ error: "Username and password required." }),
     };
   }
@@ -34,6 +47,10 @@ export const handler = async (event: any) => {
   if (username !== adminUsername) {
     return {
       statusCode: 401,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
       body: JSON.stringify({ error: "Invalid credentials." }),
     };
   }
@@ -42,6 +59,10 @@ export const handler = async (event: any) => {
   if (!isPasswordValid) {
     return {
       statusCode: 401,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
       body: JSON.stringify({ error: "Invalid credentials." }),
     };
   }
@@ -50,6 +71,10 @@ export const handler = async (event: any) => {
 
   return {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
     body: JSON.stringify({ message: "Logged in successfully.", token }),
   };
 };

@@ -1,4 +1,4 @@
-// src/pages/adminlogin.tsx
+// src/pages/AdminLogin.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function AdminLogin() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("https://citytownrp.netlify.app/api/admin/login", {
+      const response = await fetch("https://citytownrp.netlify.app/.netlify/functions/admin-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

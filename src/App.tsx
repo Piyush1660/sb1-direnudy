@@ -15,7 +15,8 @@ function App() {
       <Route path="/apply" element={<WhitelistApplication />} />
       <Route path="/rules" element={<RulesPage />} />
       <Route path="/staff-application" element={<StaffApplication />} /> 
-      <Route path="/AdminDashboard" Component={AdminLogin} />
+      <Route path="/AdminLogin" Component={AdminLogin} />
+      <Route path="/AdminDashboard" Component={AdminDashboard} />
     </Routes>
   );
 };

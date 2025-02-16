@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ArrowLeft, ToggleLeft, ToggleRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import AdminProfile from '../components/AdminProfile';
-import FormStats from '../components/FormStats';
-import DashboardMetrics from '../components/DashboardMetrics';
+
 
 const AdminDashboard: React.FC = () => {
   const [isStaffFormOpen, setIsStaffFormOpen] = useState<boolean>(true);
@@ -83,21 +81,6 @@ const AdminDashboard: React.FC = () => {
             <p className={`text-xl font-bold ${isStaffFormOpen ? 'text-green-400' : 'text-red-400'}`}>
               {isStaffFormOpen ? 'Open' : 'Closed'}
             </p>
-          </div>
-
-          {/* Real-time Form Stats */}
-          <div className="mb-8">
-            <FormStats />
-          </div>
-
-          {/* Dashboard Metrics */}
-          <div className="mb-8">
-            <DashboardMetrics />
-          </div>
-
-          {/* Admin Profile */}
-          <div className="mb-8">
-            <AdminProfile />
           </div>
         </div>
       </div>

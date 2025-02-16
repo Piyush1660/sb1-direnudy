@@ -53,7 +53,7 @@ function LandingPage() {
   useEffect(() => {
     const fetchFormStatus = async () => {
       try {
-        const response = await axios.get('/api/staff-form-status');
+        const response = await axios.get('/.netlify/functions/staff-form-status');
         setIsStaffFormOpen(response.data.isStaffFormOpen);
       } catch (error) {
         console.error('Failed to fetch staff form status:', error);

@@ -3,8 +3,7 @@ import axios from 'axios';
 import { ArrowLeft, ToggleLeft, ToggleRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AdminProfile from '../components/AdminProfile';
-import AdminActivityLogs from '../components/AdminActivityLogs';
-import Notifications from '../components/Notifications';
+import AdminActivityLogs from '../components/AdminActivityLogs'
 import FormStats from '../components/FormStats';
 import DashboardMetrics from '../components/DashboardMetrics';
 
@@ -62,8 +61,7 @@ const AdminDashboard: React.FC = () => {
             Admin Dashboard
           </h1>
 
-          {/* Notifications Component */}
-          <Notifications />
+          
 
           {/* Toggle Staff Form Section */}
           <div className="mb-8 bg-white/5 p-6 rounded-xl space-y-4">

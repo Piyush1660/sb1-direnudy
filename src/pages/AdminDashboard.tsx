@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ArrowLeft, ToggleLeft, ToggleRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import AdminProfile from '../components/AdminProfile';
+import AdminActivityLogs from '../components/AdminActivityLogs';
+import Notifications from '../components/Notifications';
+import FormStats from '../components/FormStats';
+import DashboardMetrics from '../components/DashboardMetrics';
 
 const AdminDashboard: React.FC = () => {
   const [isStaffFormOpen, setIsStaffFormOpen] = useState<boolean>(true);
@@ -57,6 +62,10 @@ const AdminDashboard: React.FC = () => {
             Admin Dashboard
           </h1>
 
+          {/* Notifications Component */}
+          <Notifications />
+
+          {/* Toggle Staff Form Section */}
           <div className="mb-8 bg-white/5 p-6 rounded-xl space-y-4">
             <h2 className="text-2xl font-semibold mb-4">Toggle Staff Form</h2>
             <button
@@ -72,11 +81,31 @@ const AdminDashboard: React.FC = () => {
             </button>
           </div>
 
-          <div className="bg-white/5 p-6 rounded-xl">
+          <div className="bg-white/5 p-6 rounded-xl mb-8">
             <h2 className="text-2xl font-semibold mb-4">Current Form Status</h2>
             <p className={`text-xl font-bold ${isStaffFormOpen ? 'text-green-400' : 'text-red-400'}`}>
               {isStaffFormOpen ? 'Open' : 'Closed'}
             </p>
+          </div>
+
+          {/* Real-time Form Stats */}
+          <div className="mb-8">
+            <FormStats />
+          </div>
+
+          {/* Dashboard Metrics */}
+          <div className="mb-8">
+            <DashboardMetrics />
+          </div>
+
+          {/* Admin Profile */}
+          <div className="mb-8">
+            <AdminProfile />
+          </div>
+
+          {/* Admin Activity Logs */}
+          <div>
+            <AdminActivityLogs />
           </div>
         </div>
       </div>

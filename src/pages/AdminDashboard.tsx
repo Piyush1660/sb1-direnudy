@@ -1,34 +1,50 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function AdminDashboard() {
-  const [isStaffFormOpen, setIsStaffFormOpen] = useState(true);
+const AdminDashboard: React.FC = () => {
+  const [isStaffFormOpen, setIsStaffFormOpen] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    // Fetch the current form status from the server when the component mounts
-    fetch('/api/staff-form-status')
-      .then(response => response.json())
-      .then(data => setIsStaffFormOpen(data.isOpen))
-      .catch(error => console.error('Error fetching form status:', error));
+    const fetchStatus = async () => {
+      try {
+        const response = await axios.get('/api/staff-form-status');
+        setIsStaffFormOpen(response.data.isStaffFormOpen);
+      } catch (err) {
+        setError('Failed to fetch staff form status.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStatus();
   }, []);
 
-  const toggleStaffForm = () => {
-    const newState = !isStaffFormOpen;
-    setIsStaffFormOpen(newState);
+  const toggleStaffForm = async () => {
+    try {
+      const newState = !isStaffFormOpen;
+      setIsStaffFormOpen(newState);
 
-    // Send the updated status to the server
-    fetch('/api/staff-form-status', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ isOpen: newState }),
-    }).catch(error => console.error('Error updating form status:', error));
+      await axios.post(
+        '/api/admin/staff-form-status',
+        { isStaffFormOpen: newState },
+        {
+          headers: {
+            'x-access-token': localStorage.getItem('adminToken') || '', 
+          },
+        }
+      );
+    } catch (err) {
+      setError('Failed to update staff form status.');
+    }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="admin-dashboard p-6 bg-gray-800 text-white min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-
       <div className="mb-8">
         <h2 className="text-xl mb-4">Toggle Staff Form</h2>
         <button
@@ -40,15 +56,11 @@ function AdminDashboard() {
           {isStaffFormOpen ? 'Turn Off Staff Form' : 'Turn On Staff Form'}
         </button>
       </div>
-
       <div>
-        <h2 className="text-xl mb-4">Current Status:</h2>
-        <p className={`text-lg font-medium ${isStaffFormOpen ? 'text-green-400' : 'text-red-400'}`}>
-          {isStaffFormOpen ? 'Staff Form is OPEN' : 'Staff Form is CLOSED'}
-        </p>
+        <h2 className="text-xl mb-4">Current Form Status: {isStaffFormOpen ? 'Open' : 'Closed'}</h2>
       </div>
     </div>
   );
-}
+};
 
 export default AdminDashboard;

@@ -22,7 +22,7 @@ function StaffApplication() {
     fetch('/api/staff-form-status')
       .then(response => response.json())
       .then(data => {
-        setIsFormOpen(data.isOpen);
+        setIsFormOpen(data.isStaffFormOpen);
         setLoading(false);
       })
       .catch(error => {

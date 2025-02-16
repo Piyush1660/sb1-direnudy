@@ -45,11 +45,16 @@ function LandingPage() {
   const whitelistRef = useRef<HTMLElement>(null);
   const joinRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
-
-  // Discord user state
   const [user, setUser] = useState<DiscordUser | null>(null);
-  // State for user dropdown visibility
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [isStaffFormOpen, setIsStaffFormOpen] = useState(true);
+
+  useEffect(() => {
+    const storedState = localStorage.getItem('staffFormOpen');
+    if (storedState) {
+      setIsStaffFormOpen(JSON.parse(storedState));
+    }
+  }, []);
 
   // Load user from localStorage on mount
   useEffect(() => {
@@ -121,37 +126,26 @@ function LandingPage() {
               City Town RP
             </h1>
 
-            {/* NAV */}
             <nav className="hidden md:flex space-x-8">
-              {/* Dropdown for Application Form */}
               <div className="relative">
-                <button
-                  onClick={toggleDropdown}
-                  className="hover:text-purple-400 transition-colors focus:outline-none flex items-center gap-1"
-                >
-                  CTRP Applications
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      dropdownOpen ? 'rotate-180' : 'rotate-0'
-                    }`}
-                  />
+                <button onClick={toggleDropdown} className="hover:text-purple-400 flex items-center gap-1">
+                  CTRP Applications <ChevronDown className={`w-4 h-4 ${dropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {dropdownOpen && (
                   <div className="absolute top-full left-0 mt-2 bg-black/70 rounded-md shadow-lg">
-                    <Link
-                      to="/staff-application"
-                      className="block px-4 py-2 hover:text-purple-400 transition-colors"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      Staff Form
-                    </Link>
+                    {isStaffFormOpen ? (
+                      <Link to="/staff-application" className="block px-4 py-2 hover:text-purple-400">
+                        Staff Form
+                      </Link>
+                    ) : (
+                      <div className="block px-4 py-2 text-gray-400 cursor-not-allowed">
+                        Staff Form Closed
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
-             
-              <Link to="/AdminLogin" className="hover:text-purple-400 transition-colors">
-              Admin Panel
-              </Link> 
+              <Link to="/AdminLogin" className="hover:text-purple-400">Admin Panel</Link>
 
               <a href="#whitelist" className="hover:text-purple-400 transition-colors">
                 Whitelist

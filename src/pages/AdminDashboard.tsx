@@ -3,19 +3,26 @@ import React, { useState, useEffect } from 'react';
 function AdminDashboard() {
   const [isStaffFormOpen, setIsStaffFormOpen] = useState(true);
 
-  // Load state from localStorage on mount
   useEffect(() => {
-    const storedState = localStorage.getItem('staffFormOpen');
-    if (storedState) {
-      setIsStaffFormOpen(JSON.parse(storedState));
-    }
+    // Fetch the current form status from the server when the component mounts
+    fetch('/api/staff-form-status')
+      .then(response => response.json())
+      .then(data => setIsStaffFormOpen(data.isOpen))
+      .catch(error => console.error('Error fetching form status:', error));
   }, []);
 
-  // Toggle Staff Form
   const toggleStaffForm = () => {
     const newState = !isStaffFormOpen;
     setIsStaffFormOpen(newState);
-    localStorage.setItem('staffFormOpen', JSON.stringify(newState));
+
+    // Send the updated status to the server
+    fetch('/api/staff-form-status', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ isOpen: newState }),
+    }).catch(error => console.error('Error updating form status:', error));
   };
 
   return (

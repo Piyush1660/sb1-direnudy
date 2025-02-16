@@ -11,16 +11,27 @@ function StaffApplication() {
     reason: '',
     strengths: '',
     additionalInfo: '',
-    interviewtiming: ''
+    interviewtiming: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Scroll to the top when the component mounts
-    window.scrollTo(0, 0);
+    // Fetch the current form status from the server when the component mounts
+    fetch('/api/staff-form-status')
+      .then(response => response.json())
+      .then(data => {
+        setIsFormOpen(data.isOpen);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching form status:', error);
+        setLoading(false);
+      });
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 

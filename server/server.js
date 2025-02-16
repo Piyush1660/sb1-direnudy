@@ -62,7 +62,7 @@ app.post("/api/admin/login", async (req, res) => {
 });
 
 // Route to get the current staff form status
-app.get("/api/staff-form-status", (req, res) => {
+app.get("/.netlify/functions/staff-form-status", (req, res) => {
   const statusFilePath = path.join(__dirname, 'staffFormStatus.json');
   if (fs.existsSync(statusFilePath)) {
     const statusData = fs.readFileSync(statusFilePath);
@@ -74,7 +74,7 @@ app.get("/api/staff-form-status", (req, res) => {
 });
 
 // Route to update the staff form status (protected)
-app.post("/api/admin/staff-form-status", verifyJWT, (req, res) => {
+app.post("/.netlify/functions/staff-form-status", verifyJWT, (req, res) => {
   const { isStaffFormOpen } = req.body;
   if (typeof isStaffFormOpen !== 'boolean') {
     return res.status(400).json({ error: "Invalid status value." });

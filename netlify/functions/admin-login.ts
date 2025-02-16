@@ -1,21 +1,9 @@
-// netlify/functions/admin-login.js
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+// netlify/functions/admin-login.ts
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-exports.handler = async (event, context) => {
-  // Allow GET requests for debugging purposes.
-  // This will help you verify that the function is deployed and responding.
-  if (event.httpMethod === "GET") {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message:
-          "This endpoint requires a POST request with a JSON body containing username and password.",
-      }),
-    };
-  }
-
-  // Only allow POST requests for actual login attempts.
+export const handler = async (event: any, context: any) => {
+  // Only allow POST requests
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -23,7 +11,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Parse the request body.
+  // Parse the request body
   let body;
   try {
     body = JSON.parse(event.body);
@@ -44,45 +32,51 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Load admin credentials from environment variables.
-  const adminUsername = process.env.ADMIN_USERNAME;
-  const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-  const jwtSecret = process.env.JWT_SECRET || "fallback_jwt_secret";
+  // Explicitly type and provide fallback values for environment variables
+  const adminUsername: string = process.env.ADMIN_USERNAME || "";
+  const adminPasswordHash: string = process.env.ADMIN_PASSWORD_HASH || "";
+  const jwtSecret: string = process.env.JWT_SECRET || "fallback_jwt_secret";
 
-  // Check if the username matches.
+  // Debug logs (only in development)
+  if (process.env.NODE_ENV !== "production") {
+    console.log("Received username:", username);
+    console.log("Expected username:", adminUsername);
+  }
+
+  // Check if the username matches (case-sensitive)
   if (username !== adminUsername) {
-    console.error(`Username mismatch: received ${username}, expected ${adminUsername}`);
+    console.error(`Username mismatch: received "${username}", expected "${adminUsername}"`);
     return {
       statusCode: 401,
       body: JSON.stringify({ error: "Invalid credentials." }),
     };
   }
 
-  // Validate the password using bcrypt.
+  // Validate the password using bcrypt
   let passwordValid;
   try {
     passwordValid = await bcrypt.compare(password, adminPasswordHash);
   } catch (error) {
-    console.error("Error during password comparison:", error);
+    console.error("Error during password validation:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Server error during password validation." }),
     };
   }
   if (!passwordValid) {
-    console.error("Password invalid for user:", username);
+    console.error("Invalid password for user:", username);
     return {
       statusCode: 401,
       body: JSON.stringify({ error: "Invalid credentials." }),
     };
   }
 
-  // Credentials are valid – create a JWT token (expires in 1 hour).
+  // Credentials are valid – create a JWT token (expires in 1 hour)
   let token;
   try {
     token = jwt.sign({ username }, jwtSecret, { expiresIn: "1h" });
   } catch (error) {
-    console.error("Error creating JWT token:", error);
+    console.error("Error generating JWT token:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Error generating token." }),

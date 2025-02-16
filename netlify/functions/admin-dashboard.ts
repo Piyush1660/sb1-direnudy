@@ -1,7 +1,7 @@
-// netlify/functions/admin-dashboard.js
-const jwt = require("jsonwebtoken");
+// netlify/functions/admin-dashboard.ts
+import jwt from "jsonwebtoken";
 
-exports.handler = async (event, context) => {
+export const handler = async (event: any, context: any) => {
   // Retrieve the Authorization header (case-insensitive)
   const authHeader = event.headers.authorization || event.headers.Authorization;
   if (!authHeader) {
@@ -14,8 +14,9 @@ exports.handler = async (event, context) => {
   // Expect the header format "Bearer <token>"
   const token = authHeader.split(" ")[1];
   try {
-    jwt.verify(token, process.env.JWT_SECRET);
-    // If the token is valid, return protected data.
+    // Verify the token using JWT_SECRET from your environment variables
+    jwt.verify(token, process.env.JWT_SECRET!);
+    // If verification is successful, return protected data.
     return {
       statusCode: 200,
       body: JSON.stringify({ data: "Secret admin dashboard data." }),

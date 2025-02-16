@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const handler = async (event: any) => {
+export const handler = async (event) => {
   if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
@@ -26,7 +26,7 @@ export const handler = async (event: any) => {
 
   const token = authHeader.split(" ")[1];
   try {
-    jwt.verify(token, process.env.JWT_SECRET!);
+    jwt.verify(token, process.env.JWT_SECRET);
     return {
       statusCode: 200,
       headers: {

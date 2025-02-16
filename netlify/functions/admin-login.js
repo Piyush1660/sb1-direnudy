@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"; // Use bcryptjs for better compatibility
 
-export const handler = async (event: any) => {
+export const handler = async (event) => {
   // Allow only POST requests
   if (event.httpMethod !== "POST") {
     return {
@@ -43,6 +43,10 @@ export const handler = async (event: any) => {
   const adminUsername = process.env.ADMIN_USERNAME || "";
   const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH || "";
   const jwtSecret = process.env.JWT_SECRET || "fallback_jwt_secret";
+
+  // Log the environment variables for debugging (remove in production)
+  console.log("Admin Username:", adminUsername);
+  console.log("Admin Password Hash:", adminPasswordHash);
 
   if (username !== adminUsername) {
     return {

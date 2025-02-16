@@ -12,7 +12,7 @@ const AdminLogin: React.FC = () => {
     setErrorMsg("");
 
     try {
-      const response = await fetch("https://citytownrp.netlify.app/.netlify/functions/admin-login", {
+      const response = await fetch("/.netlify/functions/admin-login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

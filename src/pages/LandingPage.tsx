@@ -50,10 +50,9 @@ function LandingPage() {
   const [isStaffFormOpen, setIsStaffFormOpen] = useState(true);
 
   useEffect(() => {
-    const storedState = localStorage.getItem('staffFormOpen');
-    if (storedState) {
-      setIsStaffFormOpen(JSON.parse(storedState));
-    }
+    fetch('/config.json')
+      .then((response) => response.json())
+      .then((data) => setIsStaffFormOpen(data.isStaffFormOpen));
   }, []);
 
   // Load user from localStorage on mount

@@ -1,11 +1,9 @@
 // netlify/functions/admin-login.ts
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const handler = async (event: any, context: any) => {
   // Allow only POST requests
   if (event.httpMethod !== "POST") {
-    console.error("Method Not Allowed:", event.httpMethod);
     return {
       statusCode: 405,
       body: "Method Not Allowed",
@@ -33,14 +31,15 @@ export const handler = async (event: any, context: any) => {
     };
   }
 
-  // Load admin credentials from environment variables (ensure these are set in Netlify)
+  // Load admin credentials from environment variables (plain text)
   const adminUsername: string = process.env.ADMIN_USERNAME || "";
-  const adminPasswordHash: string = process.env.ADMIN_PASSWORD_HASH || "";
+  const adminPassword: string = process.env.ADMIN_PASSWORD || "";
   const jwtSecret: string = process.env.JWT_SECRET || "fallback_jwt_secret";
 
-  // For debugging: log the expected admin username (only in development)
+  // Debug logs (only for development)
   if (process.env.NODE_ENV !== "production") {
-    console.log("Expected admin username:", adminUsername);
+    console.log("Received username:", username);
+    console.log("Expected username:", adminUsername);
   }
 
   // Check if the username matches (case-sensitive)
@@ -52,18 +51,8 @@ export const handler = async (event: any, context: any) => {
     };
   }
 
-  // Validate the password using bcrypt
-  let passwordValid: boolean;
-  try {
-    passwordValid = await bcrypt.compare(password, adminPasswordHash);
-  } catch (error) {
-    console.error("Error during password validation:", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Server error during password validation." }),
-    };
-  }
-  if (!passwordValid) {
+  // Validate the password by simple equality check (plain text)
+  if (password !== adminPassword) {
     console.error("Invalid password for user:", username);
     return {
       statusCode: 401,

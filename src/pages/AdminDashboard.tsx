@@ -82,4 +82,4 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

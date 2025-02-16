@@ -5,7 +5,7 @@ import WhitelistApplication from './pages/WhitelistApplication';
 import RulesPage from "./pages/RulesPage";
 import StaffApplication from './pages/StaffApplication';
 import AdminLogin from './pages/AdminLogin';
-import Dashboard from './pages/Dashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <Route path="/rules" element={<RulesPage />} />
       <Route path="/staff-application" element={<StaffApplication />} /> 
       <Route path="/AdminLogin" Component={AdminLogin} />
-      <Route path="/Dashboard" Component={Dashboard} />
+      <Route path="/Dashboard" Component={AdminDashboard} />
     </Routes>
   );
 };

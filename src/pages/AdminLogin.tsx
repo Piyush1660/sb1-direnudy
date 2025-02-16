@@ -12,7 +12,7 @@ function AdminLogin() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("/.netlify/functions/admin-login", {
+      const response = await fetch("https://citytownrp.netlify.app/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -22,7 +22,6 @@ function AdminLogin() {
         setErrorMsg(data.error || "Login failed");
         return;
       }
-      // Store the token in localStorage (or use HTTP-only cookies in production)
       localStorage.setItem("adminToken", data.token);
       navigate("/admin/dashboard");
     } catch (error) {

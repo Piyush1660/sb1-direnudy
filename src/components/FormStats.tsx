@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import axios from 'axios';
 
 const FormStats = () => {
-  const socket = io('http://localhost:4000'); // Change to your backend URL
-  const [submissionCount, setSubmissionCount] = useState(0);
+  const [stats, setStats] = useState<any>(null);
 
   useEffect(() => {
-    socket.on('submissionCount', (count) => setSubmissionCount(count));
-    return () => socket.off('submissionCount');
+    const fetchStats = async () => {
+      const { data } = await axios.get('/.netlify/functions/form-stats');
+      setStats(data);
+    };
+    fetchStats();
   }, []);
 
+  if (!stats) return <p>Loading stats...</p>;
+
   return (
-    <div className="bg-gray-700 p-6 rounded-lg text-white">
-      <h2 className="text-2xl font-semibold">Form Submissions</h2>
-      <p className="text-4xl font-bold mt-2">{submissionCount}</p>
+    <div className="bg-white/10 p-6 rounded-xl">
+      <h2 className="text-2xl font-semibold mb-4">Form Stats</h2>
+      <p><strong>Total Submissions:</strong> {stats.totalSubmissions}</p>
+      <p><strong>Approved:</strong> {stats.approved}</p>
+      <p><strong>Pending:</strong> {stats.pending}</p>
+      <p><strong>Rejected:</strong> {stats.rejected}</p>
     </div>
   );
 };

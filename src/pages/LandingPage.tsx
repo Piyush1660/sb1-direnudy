@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import 'animate.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 interface DiscordUser {
   id: string;
@@ -50,9 +51,15 @@ function LandingPage() {
   const [isStaffFormOpen, setIsStaffFormOpen] = useState(true);
 
   useEffect(() => {
-    fetch('/config.json')
-      .then((response) => response.json())
-      .then((data) => setIsStaffFormOpen(data.isStaffFormOpen));
+    const fetchFormStatus = async () => {
+      try {
+        const response = await axios.get('/api/staff-form-status');
+        setIsStaffFormOpen(response.data.isStaffFormOpen);
+      } catch (error) {
+        console.error('Failed to fetch staff form status:', error);
+      }
+    };
+    fetchFormStatus();
   }, []);
 
   // Load user from localStorage on mount

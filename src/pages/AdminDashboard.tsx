@@ -3,7 +3,6 @@ import axios from 'axios';
 import { ArrowLeft, ToggleLeft, ToggleRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AdminProfile from '../components/AdminProfile';
-import AdminActivityLogs from '../components/AdminActivityLogs'
 import FormStats from '../components/FormStats';
 import DashboardMetrics from '../components/DashboardMetrics';
 
@@ -99,11 +98,6 @@ const AdminDashboard: React.FC = () => {
           {/* Admin Profile */}
           <div className="mb-8">
             <AdminProfile />
-          </div>
-
-          {/* Admin Activity Logs */}
-          <div>
-            <AdminActivityLogs />
           </div>
         </div>
       </div>

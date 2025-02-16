@@ -3,8 +3,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const handler = async (event: any, context: any) => {
-  // Only allow POST requests
+  // Allow only POST requests
   if (event.httpMethod !== "POST") {
+    console.error("Method Not Allowed:", event.httpMethod);
     return {
       statusCode: 405,
       body: "Method Not Allowed",
@@ -32,15 +33,14 @@ export const handler = async (event: any, context: any) => {
     };
   }
 
-  // Explicitly type and provide fallback values for environment variables
+  // Load admin credentials from environment variables (ensure these are set in Netlify)
   const adminUsername: string = process.env.ADMIN_USERNAME || "";
   const adminPasswordHash: string = process.env.ADMIN_PASSWORD_HASH || "";
   const jwtSecret: string = process.env.JWT_SECRET || "fallback_jwt_secret";
 
-  // Debug logs (only in development)
+  // For debugging: log the expected admin username (only in development)
   if (process.env.NODE_ENV !== "production") {
-    console.log("Received username:", username);
-    console.log("Expected username:", adminUsername);
+    console.log("Expected admin username:", adminUsername);
   }
 
   // Check if the username matches (case-sensitive)
@@ -53,7 +53,7 @@ export const handler = async (event: any, context: any) => {
   }
 
   // Validate the password using bcrypt
-  let passwordValid;
+  let passwordValid: boolean;
   try {
     passwordValid = await bcrypt.compare(password, adminPasswordHash);
   } catch (error) {
@@ -72,7 +72,7 @@ export const handler = async (event: any, context: any) => {
   }
 
   // Credentials are valid – create a JWT token (expires in 1 hour)
-  let token;
+  let token: string;
   try {
     token = jwt.sign({ username }, jwtSecret, { expiresIn: "1h" });
   } catch (error) {

@@ -6,8 +6,19 @@ const AdminActivityLogs = () => {
 
   useEffect(() => {
     const fetchLogs = async () => {
-      const { data } = await axios.get('/.netlify/functions/admin-activity-logs');
-      setLogs(data);
+      try {
+        const { data } = await axios.get('/.netlify/functions/admin-activity-logs');
+        console.log(data); // Debug to see what is returned
+        if (Array.isArray(data)) {
+          setLogs(data);
+        } else {
+          console.error('Invalid data format:', data);
+          setLogs([]); // Fallback to empty array
+        }
+      } catch (error) {
+        console.error('Error fetching logs:', error);
+        setLogs([]); // Fallback on error
+      }
     };
     fetchLogs();
   }, []);

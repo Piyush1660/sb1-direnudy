@@ -14,7 +14,7 @@ const AdminActivityLogs = () => {
 
   return (
     <div className="bg-white/10 p-6 rounded-xl">
-      <h2 className="text-2xl font-semibold mb-4">Activity Logs</h2>
+      <h2 className="text-2xl font-semibold mb-4">Activity Logs </h2>
       <ul className="space-y-2">
         {logs.map((log) => (
           <li key={log.id} className="text-white/80">

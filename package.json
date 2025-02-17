@@ -13,6 +13,7 @@
     "@netlify/functions": "^3.0.0",
     "@react-three/drei": "^9.121.5",
     "@react-three/fiber": "^8.17.14",
+    "@supabase/supabase-js": "^2.48.1",
     "animate.css": "^4.1.1",
     "axios": "^1.7.9",
     "bcryptjs": "^3.0.0",

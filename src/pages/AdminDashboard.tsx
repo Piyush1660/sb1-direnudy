@@ -26,7 +26,7 @@ interface Log {
 
 const AdminDashboard: React.FC = () => {
   // Staff Form State
-  const [isStaffFormOpen, setIsStaffFormOpen] = useState<boolean>(true);
+  const [isStaffFormOpen, setIsStaffFormOpen] = useState<boolean>(false);
   const [formLoading, setFormLoading] = useState<boolean>(true);
   const [formError, setFormError] = useState<string>('');
 

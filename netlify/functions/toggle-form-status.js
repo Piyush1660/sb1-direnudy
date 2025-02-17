@@ -1,8 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const formStatusPath = path.resolve(__dirname, 'form-status.json'); // Path to the JSON file
+import fs from 'fs';
+import path from 'path';
 
-exports.handler = async (event) => {
+const formStatusPath = path.resolve('form-status.json'); // Path to the JSON file
+
+export const handler = async (event) => {
   if (event.httpMethod === 'GET') {
     // Read the current form status from the JSON file
     try {

@@ -6,7 +6,9 @@
     "rootDir": ".",
     "esModuleInterop": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "typeRoots": ["./node_modules/@types", "./types"]  // add your custom types folder here
+    
   },
   "include": ["netlify/functions/**/*.ts"],
   "exclude": ["node_modules"]

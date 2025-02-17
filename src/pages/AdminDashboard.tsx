@@ -49,7 +49,7 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const response = await axios.get('/.netlify/functions/staff-form-status');
+        const response = await axios.get('/.netlify/functions/toggle-form-status');
         setIsStaffFormOpen(response.data.isStaffFormOpen);
       } catch (err) {
         setFormError('Failed to fetch staff form status.');

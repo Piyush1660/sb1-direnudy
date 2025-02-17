@@ -36,46 +36,53 @@ const sections = [
     icon: Shield,
     title: "General Rules",
     rules: [
-      "Respect all players and staff members at all times.",
-      "No harassment, discrimination, or hate speech.",
-      "No exploiting bugs or glitches.",
-      "Follow staff instructions when given.",
+      "Respect All Players: Treat everyone with respect and professionalism. Any form of discrimination, hate speech, or harassment will not be tolerated.",
+      "No Cheating or Exploits: Cheating, exploiting game mechanics, or using third-party software to gain an unfair advantage is strictly prohibited.",
+      "Age Requirement: Players must be at least 16 years old to join the server. If under 18, ensure parental consent is in place.",
+      "Server Integrity: Do not disrupt the server’s functioning by spamming, bug abusing, or interfering with server processes.",
+      "No OOC (Out-Of-Character) Interruptions: Avoid using Out-Of-Character (OOC) chat or voice for in-character (IC) matters. Use /ooc for off-topic discussions."
     ],
   },
   {
     icon: Users,
     title: "Roleplay Rules",
     rules: [
-      "Stay in character at all times while in the city.",
-      "No powergaming or metagaming.",
-      "Value your life and roleplay accordingly.",
-      "Maintain realistic scenarios and interactions.",
+      "Stay In Character: Always stay in character unless using OOC channels. If you must leave character, use proper OOC communication.",
+      "Realistic Roleplay: Roleplay should reflect realistic actions and decisions. Avoid unrealistic or excessive behavior (e.g., unrealistic vehicle maneuvers, random killings, etc.).",
+      "Roleplay Within Boundaries: Respect others' roleplay boundaries. Don’t force actions or interactions on others that may make them uncomfortable.",
+      "RP Continuity: Keep your actions consistent and logical with the progression of the roleplay. Avoid breaking immersion by changing character traits suddenly or acting without reason.",
+      "No Random Deathmatch (RDM): Do not kill other players without proper in-character reasoning and prior interaction leading to the death."
     ],
   },
   {
     icon: MessageSquare,
     title: "Communication Rules",
     rules: [
-      "No OOC (Out of Character) chat in-game unless necessary.",
-      "Keep radio communications realistic and in character.",
-      "No spam or excessive caps in any chat.",
+      "Voice Chat: Use your in-game voice for roleplay interactions. Keep your voice chat clear, concise, and relevant to the roleplay situation.",
+      "Text Chat: Use text chat only for out-of-character (OOC) communication. All in-character communication must be done through voice or emotes.",
+      "Prohibited OOC Conversations: Avoid discussing personal, non-roleplay topics in OOC chat. Keep the focus on the roleplay experience at all times.",
+      "No Metagaming (MG): Using out-of-character knowledge to influence your in-character decisions is not allowed (e.g., knowing where a player is through OOC chat)."
     ],
   },
   {
     icon: Siren,
     title: "Combat Rules",
     rules: [
-      "No Random Death Match (RDM).",
-      "No Vehicle Death Match (VDM).",
-      "Combat logging is strictly prohibited.",
-      "Must have valid RP reason for engaging in combat.",
+      "Realistic Combat: Use realistic tactics and decision-making in combat situations. Think about your character's resources, skills, and the situation before engaging in combat.",
+      "Fear RP: If a gun or weapon is aimed at you, you must follow commands and respond realistically. Don’t initiate combat without fear of consequences.",
+      "No VDM (Vehicle Deathmatch): Running over or intentionally killing players with vehicles without a proper in-character reason is prohibited.",
+      "No RDM (Random Deathmatch): Killing a player without a valid in-character reason or roleplay build-up is forbidden. Always have a logical reason for initiating violence.",
+      "Combat Logging: Do not log off while engaged in a combat situation or when there is an active roleplay scenario in progress."
     ],
   },
   {
     icon: AlertCircle,
     title: "Rule Violations",
     rules: [
-      "Violation of these rules may result in warnings, temporary bans, or permanent bans depending on the severity and frequency of the offense. All decisions made by staff are final.",
+      "Warnings and Suspensions: Players who break rules may receive warnings, temporary suspensions, or permanent bans, depending on the severity of the violation.",
+      "Punishment Based on Severity: Minor infractions result in warnings or short-term bans. Major infractions (e.g., hacking, exploiting, or toxicity) will result in longer bans or permanent removal.",
+      "Appeals Process: Players have the right to appeal any bans or suspensions. Follow the server’s appeal process for reconsideration.",
+      "No Tolerance for Toxicity: If you are found to be constantly disruptive or toxic to other players, you will be given a warning. Repeat offenders may face harsher penalties."
     ],
   },
 ];

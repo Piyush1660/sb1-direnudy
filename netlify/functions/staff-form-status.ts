@@ -7,20 +7,21 @@ const supabase = createClient('https://itgxxoqvxlmldvofbqgm.supabase.co', 'eyJhb
 export const handler: Handler = async (event) => {
   if (event.httpMethod === 'GET') {
     try {
-      // Query the staffFormStatus table to get the status
+      // Fetch the form status from Supabase
       const { data, error } = await supabase
         .from('staffFormStatus')
         .select('isStaffFormOpen')
-        .eq('id', 1)  // Assuming you have a single record with id = 1
-        .single();
+        .eq('id', 1)
+        .single(); // Ensure we're fetching a single record
 
-      // Handle possible error or missing data
-      if (error || !data) {
-        return { statusCode: 404, body: JSON.stringify({ success: false, message: 'Status not found' }) };
+      if (error) {
+        console.error('Supabase error:', error);
+        return { statusCode: 500, body: JSON.stringify({ success: false, message: 'Failed to fetch status' }) };
       }
 
-      return { statusCode: 200, body: JSON.stringify({ isStaffFormOpen: data.isStaffFormOpen }) };
+      return { statusCode: 200, body: JSON.stringify({ isStaffFormOpen: data?.isStaffFormOpen }) };
     } catch (error) {
+      console.error('API error:', error);
       return { statusCode: 500, body: JSON.stringify({ success: false, message: 'Failed to fetch status' }) };
     }
   }
@@ -29,20 +30,21 @@ export const handler: Handler = async (event) => {
     try {
       const { isStaffFormOpen } = JSON.parse(event.body || '{}');
       
-      // Upsert the status (update or insert if not already there)
       const { data, error } = await supabase
         .from('staffFormStatus')
-        .upsert([{ id: 1, isStaffFormOpen }]);  // Assuming a single record with id = 1
+        .upsert([{ id: 1, isStaffFormOpen }]);
 
       if (error) {
+        console.error('Supabase error:', error);
         return { statusCode: 500, body: JSON.stringify({ success: false, message: 'Failed to update status' }) };
       }
 
       return { statusCode: 200, body: JSON.stringify({ success: true, isStaffFormOpen }) };
     } catch (error) {
+      console.error('API error:', error);
       return { statusCode: 500, body: JSON.stringify({ success: false, message: 'Failed to update status' }) };
     }
   }
 
   return { statusCode: 405, body: 'Method Not Allowed' };
-};
+}

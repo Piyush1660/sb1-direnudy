@@ -151,32 +151,14 @@ function LandingPage() {
                   </div>
                 )}
               </div>
-
               <Link to="/AdminLogin" className="hover:text-purple-400">Admin Panel</Link>
 
               <a href="#whitelist" className="hover:text-purple-400 transition-colors">
                 Whitelist
               </a>
-
-              <div className="relative">
-                <button onClick={toggleDropdown} className="hover:text-purple-400 flex items-center gap-1">
-                  Rules <ChevronDown className={`w-4 h-4 ${dropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {dropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 bg-black/70 rounded-md shadow-lg">
-                    {isStaffFormOpen ? (
-                      <Link to="/rules" className="hover:text-purple-400 transition-colors">
-                        CTRP|Rules
-                      </Link>
-                    ) : (
-                      <div className="block px-4 py-2 text-gray-400 cursor-not-allowed">
-                        Rules 🚫
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-              
+              <Link to="/rules" className="hover:text-purple-400 transition-colors">
+                Rules
+              </Link>
 
               {/* DISCORD LOGIN / USER INFO with Dropdown */}
               {!user ? (

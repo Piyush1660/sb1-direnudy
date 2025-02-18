@@ -28,7 +28,7 @@ function App() {
       <Route path="/server-rules" element={<ServerRules />} />
       <Route path="/Roleplay-rules" element={<RoleplayRules />} />
       <Route path="/staff-login" Component={StaffLogin} />
-      <Route path="/staff-dashboard" Component={StaffDashboard} />
+      <Route path="/staff-dashboard" element={<StaffDashboard />} />
       <Route path="/staff-loa" element={<StaffLoaForm />} />
     </Routes>
   );

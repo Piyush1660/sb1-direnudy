@@ -6,6 +6,7 @@ const StaffLoaForm = () => {
   const [formData, setFormData] = useState({
     startDate: "",
     endDate: "",
+    username_userid: "",
     reason: "",
     additionalInfo: "",
   });
@@ -14,10 +15,9 @@ const StaffLoaForm = () => {
   const handleSubmitLoa = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
       const webhookUrl =
-        "https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
+        "https://discord.com/api/webhooks/1341408106910847037/UOVyUUm6Uv14r9DX31hEwZQSy6BVpRCRXCvTFhol8EyylpEtEFMktTacO5BJnZbwK72l";
       const discordMessage = {
         embeds: [
           {
@@ -26,7 +26,7 @@ const StaffLoaForm = () => {
             fields: [
               {
                 name: "📝 LOA Details",
-                value: `**  → Start Date:** ${formData.startDate}\n**  → End Date:** ${formData.endDate}\n**  → Reason:** ${formData.reason}\n**  → Additional Information:** ${formData.additionalInfo || "N/A"}`,
+                value: `**  → Start Date:** ${formData.startDate}\n**  → End Date:** ${formData.endDate}\n**  → Username/userid:** ${formData.username_userid}\n**  → Reason:** ${formData.reason}\n** → Additional Information:** ${formData.additionalInfo || "N/A"}`,
                 inline: false,
               },
             ],
@@ -54,6 +54,7 @@ const StaffLoaForm = () => {
       setFormData({
         startDate: "",
         endDate: "",
+        username_userid: "",
         reason: "",
         additionalInfo: "",
       });
@@ -127,6 +128,25 @@ const StaffLoaForm = () => {
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
+
+              <div>
+                <label
+                  htmlFor="username_userid"
+                  className="block text-sm font-medium text-gray-300 mb-2"
+                >
+                  Username/Userid
+                </label>
+                <textarea
+                  name="username_userid"
+                  id="username_userid"
+                  placeholder="Username/Userid"
+                  value={formData.username_userid}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
 
               <div>
                 <label

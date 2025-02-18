@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { Calendar, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -11,20 +10,6 @@ const StaffLoaForm = () => {
     additionalInfo: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isFormOpen, setIsFormOpen] = useState(true); // Controls if the form is open or closed
-
-  useEffect(() => {
-    // Fetch the LOA form status from the server or set it as open
-    axios
-      .get("/.netlify/functions/loa-form-status")
-      .then((response) => {
-        setIsFormOpen(response.data.isLoaFormOpen);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch LOA form status:", error);
-        setIsFormOpen(false);
-      });
-  }, []);
 
   const handleSubmitLoa = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,28 +73,15 @@ const StaffLoaForm = () => {
     }));
   };
 
-  if (!isFormOpen) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-            LOA Form is Currently Closed
-          </h1>
-          <p className="text-lg">Check back later for updates!</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
       <div className="container mx-auto px-4">
         <Link
-          to="/"
+          to="/staff-dashboard"
           className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
-          Back to Home
+          Back to Dashboard
         </Link>
 
         <div className="max-w-3xl mx-auto">

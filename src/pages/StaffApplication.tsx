@@ -14,6 +14,7 @@ function StaffApplication() {
     interviewtiming: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(true); // Initially set the form to be open
 
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -25,8 +26,7 @@ function StaffApplication() {
     setIsSubmitting(true);
 
     try {
-      const webhookUrl =
-        "##https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
+      const webhookUrl = "https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
       const discordMessage = {
         embeds: [
           {
@@ -57,7 +57,7 @@ function StaffApplication() {
                 name: "📝 Additional Information",
                 value: formData.additionalInfo || "N/A",
                 inline: false
-              }             
+              }
             ],
             timestamp: new Date().toISOString(),
             footer: {
@@ -80,7 +80,7 @@ function StaffApplication() {
       }
 
       alert('Application submitted successfully! Our team will review it.');
-      // Reset form
+      // Reset form fields after successful submission
       setFormData({
         discordId: '',
         age: '',
@@ -106,6 +106,19 @@ function StaffApplication() {
       [name]: value
     }));
   };
+
+  if (!isFormOpen) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+            Staff Applications are Currently Closed
+          </h1>
+          <p className="text-lg">Check out our Discord #staff-announcement channel for updates!</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">

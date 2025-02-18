@@ -6,9 +6,10 @@ import RulesPages from "./pages/RulesPage";
 import StaffApplication from './pages/StaffApplication';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
-import RulesPage from "./pages/RulesPage"; // Path to the RulesPage component
-import WhitelistingRules from "./pages/WhitelistingRules"; // Path to the WhitelistingRules component
-import ServerRules from "./pages/ServerRules"; // Path to the ServerRules component
+import RulesPage from "./components/RulesPage"; // Path to the RulesPage component
+import WhitelistingRules from "./components/WhitelistingRules"; // Path to the WhitelistingRules component
+import ServerRules from "./components/ServerRules"; // Path to the ServerRules component
+import RoleplayRules from "./components/RoleplayRules"; // Path to the ServerRules component
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/Dashboard" Component={AdminDashboard} />
       <Route path="/whitelisting-rules" element={<WhitelistingRules />} />
       <Route path="/server-rules" element={<ServerRules />} />
+      <Route path="/Roleplay-rules" element={<RoleplayRules />} />
     </Routes>
   );
 };

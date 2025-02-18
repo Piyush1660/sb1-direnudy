@@ -75,6 +75,20 @@ export function RulesPage() {
               Whitelisting Rules
             </Link>
           </motion.div>
+          
+          {/* Whitelisting Rules Button */}
+          <motion.div
+            className="bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800"
+            variants={slideUp}
+          >
+            <Link
+              to="/Roleplay-rules"
+              className="block text-center py-4 px-8 text-xl font-bold text-[#ff66c4] bg-[#1a1a1a] rounded-lg border border-[#ff66c4] hover:bg-[#ff66c4] hover:text-white transition"
+            >
+              Server Rules
+            </Link>
+          </motion.div>
+
 
           {/* Server Rules Button */}
           <motion.div
@@ -85,7 +99,7 @@ export function RulesPage() {
               to="/server-rules"
               className="block text-center py-4 px-8 text-xl font-bold text-[#ff66c4] bg-[#1a1a1a] rounded-lg border border-[#ff66c4] hover:bg-[#ff66c4] hover:text-white transition"
             >
-              Server Rules
+              Roleplay Rules
             </Link>
           </motion.div>
         </div>

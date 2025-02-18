@@ -61,7 +61,7 @@ export function StaffDashboard() {
             className="text-6xl font-extrabold text-[#ff66c4] mb-6 shadow-lg"
             variants={slideUp}
           >
-            Welcome to Your Dashboard, {username}
+            Welcome to Staff Dashboard
           </motion.h1>
           <motion.p className="text-gray-400 text-lg" variants={slideUp}>
             Manage requests, view data, and interact with users here.
@@ -82,10 +82,6 @@ export function StaffDashboard() {
               <p>
                 <span className="text-[#ff66c4] text-lg">•</span> Request time off
                 from work with a simple form.
-              </p>
-              <p>
-                <span className="text-[#ff66c4] text-lg">•</span> Your current LOA
-                status: <span className="font-semibold">{loaStatus}</span>
               </p>
             </div>
             <Link

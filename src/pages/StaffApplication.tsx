@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Send } from 'lucide-react';
 
@@ -14,11 +15,23 @@ function StaffApplication() {
     interviewtiming: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isFormOpen, setIsFormOpen] = useState(true); // Initially set the form to be open
+  const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo(0, 0);
+    
+    // Fetch staff form status from the Netlify function
+    axios
+      .get('/.netlify/functions/staff-form-status')
+      .then((response) => {
+        console.log('Staff form status response:', response.data);
+        setIsFormOpen(response.data.isStaffFormOpen);
+      })
+      .catch((error) => {
+        console.error('Error fetching staff form status:', error);
+        setIsFormOpen(false);
+      });
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,7 +39,8 @@ function StaffApplication() {
     setIsSubmitting(true);
 
     try {
-      const webhookUrl = "https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
+      const webhookUrl =
+        "https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
       const discordMessage = {
         embeds: [
           {
@@ -69,9 +83,7 @@ function StaffApplication() {
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(discordMessage)
       });
 
@@ -80,7 +92,6 @@ function StaffApplication() {
       }
 
       alert('Application submitted successfully! Our team will review it.');
-      // Reset form fields after successful submission
       setFormData({
         discordId: '',
         age: '',
@@ -93,7 +104,7 @@ function StaffApplication() {
       });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('Staff Application Forms are Closed. Check out our discord #staff-announcement channel');
+      alert('There was an error submitting your application. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -101,10 +112,7 @@ function StaffApplication() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   if (!isFormOpen) {
@@ -114,7 +122,9 @@ function StaffApplication() {
           <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
             Staff Applications are Currently Closed
           </h1>
-          <p className="text-lg">Check out our Discord #staff-announcement channel for updates!</p>
+          <p className="text-lg">
+            Check out our Discord #staff-announcement channel for updates!
+          </p>
         </div>
       </div>
     );

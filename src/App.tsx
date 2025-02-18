@@ -10,6 +10,9 @@ import RulesPage from "./components/RulesPage"; // Path to the RulesPage compone
 import WhitelistingRules from "./components/WhitelistingRules"; // Path to the WhitelistingRules component
 import ServerRules from "./components/ServerRules"; // Path to the ServerRules component
 import RoleplayRules from "./components/RoleplayRules"; // Path to the ServerRules component
+import StaffLogin from './pages/StaffLogin';
+import StaffDashboard from './pages/StaffDashboard';
+import StaffLoaForm from "./pages/StaffLoaForm";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
       <Route path="/whitelisting-rules" element={<WhitelistingRules />} />
       <Route path="/server-rules" element={<ServerRules />} />
       <Route path="/Roleplay-rules" element={<RoleplayRules />} />
+      <Route path="/staff-login" Component={StaffLogin} />
+      <Route path="/staff-dashboard" Component={StaffDashboard} />
+      <Route path="/staff-loa" element={<StaffLoaForm />} />
     </Routes>
   );
 };

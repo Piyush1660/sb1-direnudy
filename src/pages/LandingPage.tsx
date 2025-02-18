@@ -49,6 +49,7 @@ function LandingPage() {
   const [user, setUser] = useState<DiscordUser | null>(null);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isStaffFormOpen, setIsStaffFormOpen] = useState(true);
+  const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchFormStatus = async () => {
@@ -111,6 +112,11 @@ function LandingPage() {
     setUserDropdownOpen(false);
   };
 
+  // Function to toggle admin dropdown visibility
+  const handleAdminDropdownToggle = () => {
+    setAdminDropdownOpen((prev) => !prev);
+  };
+
   // Scroll-triggered animations
   useScrollAnimation(aboutRef);
   useScrollAnimation(featuresRef);
@@ -133,8 +139,9 @@ function LandingPage() {
             </h1>
 
             <nav className="hidden md:flex space-x-8">
+              {/* CTRP Applications Dropdown */}
               <div className="relative">
-                <button onClick={toggleDropdown} className="hover:text-purple-400 flex items-center gap-1">
+                <button onClick={() => setDropdownOpen((prev) => !prev)} className="hover:text-purple-400 flex items-center gap-1">
                   CTRP Applications <ChevronDown className={`w-4 h-4 ${dropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {dropdownOpen && (
@@ -151,7 +158,23 @@ function LandingPage() {
                   </div>
                 )}
               </div>
-              <Link to="/AdminLogin" className="hover:text-purple-400">Admin Panel</Link>
+
+              {/* Admin Panel Dropdown */}
+              <div className="relative">
+                <button onClick={handleAdminDropdownToggle} className="hover:text-purple-400 flex items-center gap-1">
+                  Admin/Staff Login <ChevronDown className={`w-4 h-4 ${adminDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {adminDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 bg-black/70 rounded-md shadow-lg">
+                    <Link to="/AdminLogin" className="block px-4 py-2 hover:text-purple-400">
+                      Admin Login
+                    </Link>
+                    <Link to="/staff-login" className="block px-4 py-2 hover:text-purple-400">
+                      Staff Login
+                    </Link>
+                  </div>
+                )}
+              </div>
 
               <a href="#whitelist" className="hover:text-purple-400 transition-colors">
                 Whitelist

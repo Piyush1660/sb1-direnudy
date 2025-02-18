@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ArrowLeft, ToggleLeft, ToggleRight, RefreshCcw, X, Download } from 'lucide-react';
+import { ArrowLeft, RefreshCcw, X, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -21,11 +21,10 @@ interface Log {
   joined_at: string;
   left_at: string;
   duration: string; // assume duration in minutes as string (e.g., "15")
-  // add other fields if available
 }
 
 const AdminDashboard: React.FC = () => {
-  // Staff Form State
+  // Staff Form Status State
   const [isStaffFormOpen, setIsStaffFormOpen] = useState<boolean>(false);
   const [formLoading, setFormLoading] = useState<boolean>(true);
   const [formError, setFormError] = useState<string>('');
@@ -37,7 +36,7 @@ const AdminDashboard: React.FC = () => {
 
   // Additional States for interactions
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [sortKey, setSortKey] = useState<string>(''); // e.g., 'username', 'joined_at'
+  const [sortKey, setSortKey] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const logsPerPage = 10;
@@ -52,7 +51,7 @@ const AdminDashboard: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string>('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
-  // Fetch Staff Form Status
+  // Fetch Staff Form Status from the Netlify function (which reads from an env variable)
   useEffect(() => {
     const fetchStatus = async () => {
       try {
@@ -88,26 +87,6 @@ const AdminDashboard: React.FC = () => {
     fetchLogs();
   }, []);
 
-  const toggleStaffForm = async () => {
-    try {
-      const newState = !isStaffFormOpen;
-      setIsStaffFormOpen(newState);
-      await axios.post(
-        '/.netlify/functions/staff-form-status',
-        { isStaffFormOpen: newState },
-        {
-          headers: {
-            'x-access-token': localStorage.getItem('adminToken') || '',
-          },
-        }
-      );
-      showToast('Staff form status updated!', 'success');
-    } catch (err) {
-      setFormError('Failed to update staff form status.');
-      showToast('Error updating staff form status.', 'error');
-    }
-  };
-
   // Toast helper
   const showToast = (message: string, type: 'success' | 'error') => {
     setToastMessage(message);
@@ -128,11 +107,9 @@ const AdminDashboard: React.FC = () => {
   // Combined filtering: by search term and date range
   const filteredLogs = logs
     .filter((log) => {
-      // Filter by search term (username or channel)
       const matchesSearch =
         log.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
         log.channel_name.toLowerCase().includes(searchTerm.toLowerCase());
-      // Filter by date range if provided (using joined_at date)
       let matchesDate = true;
       if (fromDate) {
         matchesDate = new Date(log.joined_at) >= new Date(fromDate);
@@ -234,32 +211,19 @@ const AdminDashboard: React.FC = () => {
         </Link>
         <h1 className="text-4xl font-bold text-center mb-8">Admin Dashboard</h1>
 
-        {/* Staff Form Toggle Section */}
+        {/* Staff Form Status Section */}
         <div className="bg-white/5 p-8 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4">Staff Form Control</h2>
+          <h2 className="text-2xl font-semibold mb-4">Staff Form Status</h2>
           {formLoading ? (
             <p className="text-center">Loading staff form status...</p>
           ) : formError ? (
             <p className="text-center text-red-500">{formError}</p>
           ) : (
-            <>
-              <button
-                onClick={toggleStaffForm}
-                className={`w-full px-8 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-3 ${
-                  isStaffFormOpen
-                    ? 'bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800'
-                    : 'bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800'
-                }`}
-              >
-                {isStaffFormOpen ? <ToggleRight className="w-5 h-5" /> : <ToggleLeft className="w-5 h-5" />}
-                {isStaffFormOpen ? 'Turn Off Staff Form' : 'Turn On Staff Form'}
-              </button>
-              <div className="mt-4">
-                <p className={`text-xl font-bold ${isStaffFormOpen ? 'text-green-400' : 'text-red-400'}`}>
-                  {isStaffFormOpen ? 'Open' : 'Closed'}
-                </p>
-              </div>
-            </>
+            <div className="mt-4">
+              <p className={`text-xl font-bold ${isStaffFormOpen ? 'text-green-400' : 'text-red-400'}`}>
+                {isStaffFormOpen ? 'Open' : 'Closed'}
+              </p>
+            </div>
           )}
         </div>
 
@@ -453,7 +417,6 @@ const AdminDashboard: React.FC = () => {
               <p>
                 <span className="font-semibold">Duration:</span> {selectedLog.duration}
               </p>
-              {/* Add more details here if available */}
             </div>
           </div>
         </div>

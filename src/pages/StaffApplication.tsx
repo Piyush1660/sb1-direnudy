@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Send } from 'lucide-react';
 
@@ -14,22 +15,22 @@ function StaffApplication() {
     interviewtiming: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isFormOpen, setIsFormOpen] = useState(true);
+  const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
 
-  // Fetch the staff form status from the backend on component mount
   useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo(0, 0);
+    // Fetch staff form status from the Netlify function
     const fetchFormStatus = async () => {
       try {
-        const response = await fetch('/.netlify/functions/staff-form-status');
-        const data = await response.json();
-        setIsFormOpen(data.isStaffFormOpen);
+        const response = await axios.get('/.netlify/functions/staff-form-status');
+        setIsFormOpen(response.data.isStaffFormOpen);
       } catch (error) {
-        console.error('Error fetching form status:', error);
+        console.error('Error fetching staff form status:', error);
+        setIsFormOpen(false);
       }
     };
-
     fetchFormStatus();
-    window.scrollTo(0, 0);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,42 +39,42 @@ function StaffApplication() {
 
     try {
       const webhookUrl =
-        'https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd';
+        "https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
       const discordMessage = {
         embeds: [
           {
-            title: 'New Staff Application',
+            title: "New Staff Application",
             color: 0x9C44FF,
             fields: [
               {
-                name: '📝 Personal Information',
+                name: "📝 Personal Information",
                 value: `**  → Discord ID:** ${formData.discordId}\n**  → Age:** ${formData.age}\n**  → Timezone:** ${formData.timezone}\n**  → Interview Timing:** ${formData.interviewtiming}`,
                 inline: false
               },
               {
-                name: '💼 Experience',
-                value: formData.experience || 'No prior experience provided',
+                name: "💼 Experience",
+                value: formData.experience || "No prior experience provided",
                 inline: false
               },
               {
-                name: '🎯 Why Join as Staff?',
+                name: "🎯 Why Join as Staff?",
                 value: formData.reason,
                 inline: false
               },
               {
-                name: '💪 Strengths',
+                name: "💪 Strengths",
                 value: formData.strengths,
                 inline: false
               },
               {
-                name: '📝 Additional Information',
-                value: formData.additionalInfo || 'N/A',
+                name: "📝 Additional Information",
+                value: formData.additionalInfo || "N/A",
                 inline: false
               }
             ],
             timestamp: new Date().toISOString(),
             footer: {
-              text: 'City Town RP Staff Application'
+              text: "City Town RP Staff Application"
             }
           }
         ]
@@ -92,6 +93,7 @@ function StaffApplication() {
       }
 
       alert('Application submitted successfully! Our team will review it.');
+      // Reset form fields after successful submission
       setFormData({
         discordId: '',
         age: '',
@@ -104,7 +106,7 @@ function StaffApplication() {
       });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('Staff Application Forms are Closed. Check out our discord #staff-announcement channel');
+      alert('There was an error submitting your application. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -163,7 +165,36 @@ function StaffApplication() {
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
-              {/* ... other fields ... */}
+              <div>
+                <label htmlFor="age" className="block text-sm font-medium text-gray-300 mb-2">
+                  Age*
+                </label>
+                <input
+                  type="number"
+                  name="age"
+                  id="age"
+                  placeholder="Age"
+                  value={formData.age}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="timezone" className="block text-sm font-medium text-gray-300 mb-2">
+                  Timezone*
+                </label>
+                <input
+                  type="text"
+                  name="timezone"
+                  id="timezone"
+                  placeholder="Timezone"
+                  value={formData.timezone}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
               <div>
                 <label htmlFor="interviewtiming" className="block text-sm font-medium text-gray-300 mb-2">
                   Interview Timing*

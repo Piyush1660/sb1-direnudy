@@ -1,40 +1,19 @@
 import { Handler } from '@netlify/functions';
 
-let isStaffFormOpen = true;
-
 export const handler: Handler = async (event) => {
-  // Handling GET request
   if (event.httpMethod === 'GET') {
+    // Use the Netlify environment variable to control the staff form status.
+    // Set STAFF_FORM_OPEN in your Netlify dashboard to "true" or "false"
+    const isStaffFormOpen = process.env.STAFF_FORM_OPEN === 'true';
     return {
       statusCode: 200,
       body: JSON.stringify({ isStaffFormOpen }),
     };
   }
-
-  // Handling POST request
-  if (event.httpMethod === 'POST') {
-    try {
-      const { isStaffFormOpen: newStatus } = JSON.parse(event.body || '{}');
-
-      // Updating status
-      isStaffFormOpen = newStatus;
-
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ success: true, isStaffFormOpen }),
-      };
-    } catch (error) {
-      console.error('Error parsing request body:', error);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ success: false, message: 'Internal Server Error' }),
-      };
-    }
-  }
-
-  // If method is not GET or POST
-  return { 
-    statusCode: 405, 
-    body: JSON.stringify({ message: 'Method Not Allowed' }) 
+  
+  // For any other method, return 405 Method Not Allowed
+  return {
+    statusCode: 405,
+    body: JSON.stringify({ message: 'Method Not Allowed' }),
   };
 };

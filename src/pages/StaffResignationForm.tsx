@@ -16,7 +16,7 @@ const StaffResignationForm = () => {
     setIsSubmitting(true);
     try {
       const webhookUrl =
-        "https://discord.com/api/webhooks/1341408106910847037/UOVyUUm6Uv14r9DX31hEwZQSy6BVpRCRXCvTFhol8EyylpEtEFMktTacO5BJnZbwK72l";
+        "https://discord.com/api/webhooks/1341664992952320060/7OGaoerPBjZV8cARlLdprqgUlyw54wBN5hO51gxbJeZl2PBKc-HesPzo3Kdi6Q3wvDCf";
       const discordMessage = {
         embeds: [
           {

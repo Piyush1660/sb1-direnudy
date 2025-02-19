@@ -13,6 +13,7 @@ import RoleplayRules from "./components/RoleplayRules"; // Path to the ServerRul
 import StaffLogin from './pages/StaffLogin';
 import StaffDashboard from './pages/StaffDashboard';
 import StaffLoaForm from "./pages/StaffLoaForm";
+import StaffResignationForm from "./pages/StaffResignationForm";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
       <Route path="/staff-login" Component={StaffLogin} />
       <Route path="/staff-dashboard" element={<StaffDashboard />} />
       <Route path="/staff-loa" element={<StaffLoaForm />} />
+      <Route path="/staff-resignation" element={<StaffResignationForm />} />
+
     </Routes>
   );
 };

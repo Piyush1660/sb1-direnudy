@@ -93,6 +93,29 @@ export function StaffDashboard() {
             </Link>
           </motion.div>
 
+                    {/* LOA Form Section */}
+                    <motion.div
+            className="bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800"
+            variants={slideUp}
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Clipboard className="text-[#ff66c4]" size={24} />
+              <h2 className="text-3xl font-bold text-white">Staff Resignation (Resign )</h2>
+            </div>
+            <div className="space-y-4 text-gray-300">
+              <p>
+                <span className="text-[#ff66c4] text-lg">•</span> Request for Resigning form Staff with a simple form.
+              </p>
+            </div>
+            <Link
+              to="/staff-resignation"  
+              className="mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold text-white"
+            >
+              <Calendar className="w-5 h-5" />
+              Submit Staff Resignation Request
+            </Link>
+          </motion.div>
+
           {/* Team Management Section */}
           <motion.div
             className="bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800"

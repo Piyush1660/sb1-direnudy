@@ -33,7 +33,7 @@ function StreamerApplication() {
 
     try {
       // Replace this URL with your actual Discord webhook URL
-      const webhookUrl = "https://discord.com/api/webhooks/1326230234600706159/66K2PA70YKw0gXnOk1hVod5Yt9xAL7IpbU-nJUm1FXVdBnYZ_WqJY-G0lQLrncL1Qlie";
+      const webhookUrl = "https://discord.com/api/webhooks/1342141207312072704/-Gf_3rk2oDlSu9c0MmoANOlsijtVX0OgaIQZzt7kTyHE1NrGx3uBn7FYCIrqHc910vbC";
 
       const discordMessage = {
         embeds: [

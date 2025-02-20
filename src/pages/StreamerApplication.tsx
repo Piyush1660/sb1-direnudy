@@ -354,9 +354,9 @@ function StreamerApplication() {
                   platform link?*
                 </label>
                 <input
-                  
-                  id="streamingPlatformLink"
-                  name="streamingPlatformLink"
+                  type="text"
+                  id="streamingPlatformlink"
+                  name="streamingPlatformlink"
                   required
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="e.g., https://www.youtube.com/@CTRPOFFICIAL"

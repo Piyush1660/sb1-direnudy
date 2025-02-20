@@ -343,7 +343,7 @@ function StreamerApplication() {
                   name="streamingPlatform"
                   required
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="e.g., Twitch, YouTube, Facebook Gaming"
+                  placeholder="e.g., Twitch, YouTube, Facebook, etc."
                   value={formData.streamingPlatform}
                   onChange={handleChange}
                 />
@@ -354,7 +354,7 @@ function StreamerApplication() {
                   platform link?*
                 </label>
                 <input
-                  type="text"
+                  
                   id="streamingPlatformLink"
                   name="streamingPlatformLink"
                   required

@@ -146,6 +146,11 @@ function LandingPage() {
                 </button>
                 {dropdownOpen && (
                   <div className="absolute top-full left-0 mt-2 bg-black/70 rounded-md shadow-lg">
+
+                      <Link to="/streamer-application" className="block px-4 py-2 hover:text-purple-400">
+                      Streamer Form
+                      </Link>
+
                     {isStaffFormOpen ? (
                       <Link to="/staff-application" className="block px-4 py-2 hover:text-purple-400">
                         Staff Form

@@ -14,6 +14,7 @@ import StaffLogin from './pages/StaffLogin';
 import StaffDashboard from './pages/StaffDashboard';
 import StaffLoaForm from "./pages/StaffLoaForm";
 import StaffResignationForm from "./pages/StaffResignationForm";
+import StreamerApplication from "./pages/StreamerApplication";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path="/staff-dashboard" element={<StaffDashboard />} />
       <Route path="/staff-loa" element={<StaffLoaForm />} />
       <Route path="/staff-resignation" element={<StaffResignationForm />} />
+      <Route path="/streamer-application" element={<StreamerApplication />} />
 
     </Routes>
   );

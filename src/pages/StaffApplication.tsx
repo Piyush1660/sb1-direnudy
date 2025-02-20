@@ -3,34 +3,35 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Send } from 'lucide-react';
 import axios from 'axios';
 
-function StaffApplication() {
+function StreamerApplication() {
   const [formData, setFormData] = useState({
     discordId: '',
     age: '',
     timezone: '',
-    experience: '',
+    platform: '',
+    channelLink: '',
+    followerCount: '',
+    streamingExperience: '',
     reason: '',
     strengths: '',
-    additionalInfo: '',
-    interviewtiming: ''
+    additionalInfo: ''
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isFormOpen, setIsFormOpen] = useState(true); // Initially set the form to be open
+  const [isFormOpen, setIsFormOpen] = useState(true);
 
   useEffect(() => {
-    // Scroll to the top when the component mounts
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    // Fetch the staff form status from the Netlify function
     axios
-      .get('/.netlify/functions/staff-form-status')
+      .get('/.netlify/functions/streamer-form-status')
       .then((response) => {
-        setIsFormOpen(response.data.isStaffFormOpen);
+        setIsFormOpen(response.data.isStreamerFormOpen);
       })
       .catch((error) => {
-        console.error('Failed to fetch staff form status:', error);
+        console.error('Failed to fetch streamer form status:', error);
         setIsFormOpen(false);
       });
   }, []);
@@ -40,26 +41,31 @@ function StaffApplication() {
     setIsSubmitting(true);
 
     try {
-      const webhookUrl =
-        'https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd';
+      const webhookUrl = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL_HERE';
+
       const discordMessage = {
         embeds: [
           {
-            title: 'New Staff Application',
-            color: 0x9c44ff,
+            title: 'New Streamer Application',
+            color: 0x0099ff,
             fields: [
               {
                 name: '📝 Personal Information',
-                value: `**  → Discord ID:** ${formData.discordId}\n**  → Age:** ${formData.age}\n**  → Timezone:** ${formData.timezone}\n**  → Interview Timing:** ${formData.interviewtiming}`,
+                value: `**→ Discord ID:** ${formData.discordId}\n**→ Age:** ${formData.age}\n**→ Timezone:** ${formData.timezone}`,
+                inline: false
+              },
+              {
+                name: '🎥 Streaming Details',
+                value: `**→ Platform:** ${formData.platform}\n**→ Channel Link:** ${formData.channelLink}\n**→ Followers:** ${formData.followerCount}`,
                 inline: false
               },
               {
                 name: '💼 Experience',
-                value: formData.experience || 'No prior experience provided',
+                value: formData.streamingExperience || 'No prior experience provided',
                 inline: false
               },
               {
-                name: '🎯 Why Join as Staff?',
+                name: '🎯 Why Join as Streamer?',
                 value: formData.reason,
                 inline: false
               },
@@ -76,7 +82,7 @@ function StaffApplication() {
             ],
             timestamp: new Date().toISOString(),
             footer: {
-              text: 'City Town RP Staff Application'
+              text: 'City Town RP Streamer Application'
             }
           }
         ]
@@ -84,9 +90,7 @@ function StaffApplication() {
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(discordMessage)
       });
 
@@ -95,20 +99,22 @@ function StaffApplication() {
       }
 
       alert('Application submitted successfully! Our team will review it.');
-      // Reset form fields after successful submission
+
       setFormData({
         discordId: '',
         age: '',
         timezone: '',
-        experience: '',
+        platform: '',
+        channelLink: '',
+        followerCount: '',
+        streamingExperience: '',
         reason: '',
         strengths: '',
-        additionalInfo: '',
-        interviewtiming: ''
+        additionalInfo: ''
       });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('Staff Application Forms are Closed. Check out our discord #staff-announcement channel');
+      alert('Streamer applications are currently closed. Check our Discord announcements for updates.');
     } finally {
       setIsSubmitting(false);
     }
@@ -126,10 +132,10 @@ function StaffApplication() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-            Staff Applications are Currently Closed
+          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-teal-500 bg-clip-text text-transparent">
+            Streamer Applications are Currently Closed
           </h1>
-          <p className="text-lg">Check out our Discord #staff-announcement channel for updates!</p>
+          <p className="text-lg">Check out our Discord #announcements channel for updates!</p>
         </div>
       </div>
     );
@@ -138,158 +144,82 @@ function StaffApplication() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
       <div className="container mx-auto px-4">
-        <Link to="/" className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8">
+        <Link to="/" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8">
           <ArrowLeft className="w-5 h-5" />
           Back to Home
         </Link>
 
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-            CTRP | Staff Application
+          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-teal-500 bg-clip-text text-transparent">
+            CTRP | Streamer Application
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Personal Information */}
             <div className="bg-white/5 p-8 rounded-xl space-y-6">
               <h2 className="text-2xl font-semibold mb-6">Personal Information</h2>
-              <div>
-                <label htmlFor="discordId" className="block text-sm font-medium text-gray-300 mb-2">
-                  Discord ID*
-                </label>
-                <input
-                  type="text"
-                  name="discordId"
-                  id="discordId"
-                  placeholder="Discord ID"
-                  value={formData.discordId}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="age" className="block text-sm font-medium text-gray-300 mb-2">
-                  Age*
-                </label>
-                <input
-                  type="number"
-                  name="age"
-                  id="age"
-                  placeholder="Age"
-                  value={formData.age}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="timezone" className="block text-sm font-medium text-gray-300 mb-2">
-                  Timezone*
-                </label>
-                <input
-                  type="text"
-                  name="timezone"
-                  id="timezone"
-                  placeholder="Timezone"
-                  value={formData.timezone}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="interviewtiming" className="block text-sm font-medium text-gray-300 mb-2">
-                  Interview Timing*
-                </label>
-                <input
-                  type="text"
-                  name="interviewtiming"
-                  id="interviewtiming"
-                  placeholder="Interview Timing?"
-                  value={formData.interviewtiming}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
+              {['discordId', 'age', 'timezone'].map((field) => (
+                <div key={field}>
+                  <label htmlFor={field} className="block text-sm font-medium text-gray-300 mb-2">
+                    {field.replace(/([A-Z])/g, ' $1').trim()}*
+                  </label>
+                  <input
+                    type="text"
+                    name={field}
+                    id={field}
+                    placeholder={field.replace(/([A-Z])/g, ' $1').trim()}
+                    value={formData[field as keyof typeof formData]}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Streaming Details */}
+            <div className="bg-white/5 p-8 rounded-xl space-y-6">
+              <h2 className="text-2xl font-semibold mb-6">Streaming Details</h2>
+              {['platform', 'channelLink', 'followerCount'].map((field) => (
+                <div key={field}>
+                  <label htmlFor={field} className="block text-sm font-medium text-gray-300 mb-2">
+                    {field.replace(/([A-Z])/g, ' $1').trim()}*
+                  </label>
+                  <input
+                    type="text"
+                    name={field}
+                    id={field}
+                    placeholder={field.replace(/([A-Z])/g, ' $1').trim()}
+                    value={formData[field as keyof typeof formData]}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              ))}
             </div>
 
             {/* Experience & Motivation */}
-            <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Experience & Motivation</h2>
-              <div>
-                <label htmlFor="experience" className="block text-sm font-medium text-gray-300 mb-2">
-                  Experience
+            {['streamingExperience', 'reason', 'strengths', 'additionalInfo'].map((field) => (
+              <div key={field} className="bg-white/5 p-8 rounded-xl space-y-6">
+                <label htmlFor={field} className="block text-sm font-medium text-gray-300 mb-2">
+                  {field.replace(/([A-Z])/g, ' $1').trim()}
                 </label>
                 <textarea
-                  name="experience"
-                  id="experience"
-                  placeholder="Describe your experience"
-                  value={formData.experience}
+                  name={field}
+                  id={field}
+                  placeholder={`Enter ${field.replace(/([A-Z])/g, ' $1').trim()}`}
+                  value={formData[field as keyof typeof formData]}
                   onChange={handleChange}
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div>
-                <label htmlFor="reason" className="block text-sm font-medium text-gray-300 mb-2">
-                  Why do you want to join?
-                </label>
-                <textarea
-                  name="reason"
-                  id="reason"
-                  placeholder="Why do you want to join?"
-                  value={formData.reason}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
-            </div>
+            ))}
 
-            {/* Skills & Additional Info */}
-            <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Skills & Additional Info</h2>
-              <div>
-                <label htmlFor="strengths" className="block text-sm font-medium text-gray-300 mb-2">
-                  What are your strengths?
-                </label>
-                <textarea
-                  name="strengths"
-                  id="strengths"
-                  placeholder="What are your strengths?"
-                  value={formData.strengths}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="additionalInfo" className="block text-sm font-medium text-gray-300 mb-2">
-                  Additional Information
-                </label>
-                <textarea
-                  name="additionalInfo"
-                  id="additionalInfo"
-                  placeholder="Any additional information?"
-                  value={formData.additionalInfo}
-                  onChange={handleChange}
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all ${
-                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-              >
-                <Send className="w-5 h-5" />
-                {isSubmitting ? 'Submitting...' : 'Submit Application'}
-              </button>
-            </div>
+            <button type="submit" className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-lg font-semibold">
+              <Send className="w-5 h-5" />
+              {isSubmitting ? 'Submitting...' : 'Submit Application'}
+            </button>
           </form>
         </div>
       </div>
@@ -297,4 +227,4 @@ function StaffApplication() {
   );
 }
 
-export default StaffApplication;
+export default StreamerApplication;

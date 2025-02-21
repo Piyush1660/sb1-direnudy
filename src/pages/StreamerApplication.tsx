@@ -62,24 +62,6 @@ function StreamerApplication() {
                 inline: false
               },
               {
-                name: "👤 Character Information",
-                value: [
-                  `**Name:** ${formData.characterName}`,
-                  `**Age:** ${formData.characterAge}`,
-                ].join('\n'),
-                inline: false
-              },
-              {
-                name: "📖 Character Backstory",
-                value: formData.backstory.slice(0, 1024),
-                inline: false
-              },
-              {
-                name: "🎬 Scenario Response",
-                value: formData.scenarioResponse.slice(0, 1024),
-                inline: false
-              },
-              {
                 name: "🔒 Whitelisting Questions",
                 value: [
                   `**Streaming Platform:** ${formData.streamingPlatform}`,
@@ -259,76 +241,7 @@ function StreamerApplication() {
               </div>
             </div>
 
-            <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Character Information</h2>
-              
-              <div>
-                <label htmlFor="characterName" className="block text-sm font-medium text-gray-300 mb-2">
-                  Character Name*
-                </label>
-                <input
-                  type="text"
-                  id="characterName"
-                  name="characterName"
-                  required
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="First and Last Name"
-                  value={formData.characterName}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="characterAge" className="block text-sm font-medium text-gray-300 mb-2">
-                  Character Age*
-                </label>
-                <input
-                  type="number"
-                  id="characterAge"
-                  name="characterAge"
-                  required
-                  min="18"
-                  max="100"
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  value={formData.characterAge}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="backstory" className="block text-sm font-medium text-gray-300 mb-2">
-                  Character Backstory*
-                </label>
-                <textarea
-                  id="backstory"
-                  name="backstory"
-                  required
-                  rows={6}
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="Tell us about your character's background, motivations, and goals..."
-                  value={formData.backstory}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="scenarioResponse" className="block text-sm font-medium text-gray-300 mb-2">
-                  Roleplay Scenario*
-                </label>
-                <p className="text-sm text-gray-400 mb-4">
-                  Your character witnesses a robbery at a local convenience store. How would they react to this situation?
-                </p>
-                <textarea
-                  id="scenarioResponse"
-                  name="scenarioResponse"
-                  required
-                  rows={6}
-                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  value={formData.scenarioResponse}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+          
 
             <div className="bg-white/5 p-8 rounded-xl space-y-6">
               <h2 className="text-2xl font-semibold mb-6">Streaming Questions</h2>

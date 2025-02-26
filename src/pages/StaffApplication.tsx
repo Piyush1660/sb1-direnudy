@@ -183,6 +183,21 @@ const StaffApplication = () => {
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white"
                 />
               </div>
+              
+              <div>
+                <label htmlFor="staffExperience" className="block text-sm font-medium text-gray-300 mb-2">
+                  Staff Experience
+                </label>
+                <textarea
+                  name="staffExperience"
+                  id="staffExperience"
+                  placeholder="Describe your past staff experience, if any"
+                  value={formData.staffExperience}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
 
               <div>
                 <label className="flex items-center space-x-3">
@@ -197,6 +212,82 @@ const StaffApplication = () => {
                 </label>
               </div>
             </div>
+
+            <div>
+                <label htmlFor="strengths" className="block text-sm font-medium text-gray-300 mb-2">
+                  Strengths
+                </label>
+                <textarea
+                  name="strengths"
+                  id="strengths"
+                  placeholder="What are your strengths?"
+                  value={formData.strengths}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="weaknesses" className="block text-sm font-medium text-gray-300 mb-2">
+                  Weaknesses
+                </label>
+                <textarea
+                  name="weaknesses"
+                  id="weaknesses"
+                  placeholder="What are your weaknesses?"
+                  value={formData.weaknesses}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="whyJoin" className="block text-sm font-medium text-gray-300 mb-2">
+                  Why do you want to join?
+                </label>
+                <textarea
+                  name="whyJoin"
+                  id="whyJoin"
+                  placeholder="Explain why you want to be part of the team"
+                  value={formData.whyJoin}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="scenarioResponse" className="block text-sm font-medium text-gray-300 mb-2">
+                  Scenario Response
+                </label>
+                <textarea
+                  name="scenarioResponse"
+                  id="scenarioResponse"
+                  placeholder="How would you handle a difficult situation as a staff member?"
+                  value={formData.scenarioResponse}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="availability" className="block text-sm font-medium text-gray-300 mb-2">
+                  Availability
+                </label>
+                <textarea
+                  name="availability"
+                  id="availability"
+                  placeholder="How many hours can you dedicate weekly?"
+                  value={formData.availability}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            
 
             <div className="flex justify-end">
               <button

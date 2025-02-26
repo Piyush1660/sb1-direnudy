@@ -1,171 +1,110 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Send } from 'lucide-react';
-import axios from 'axios';
+import React, { useState } from "react";
 
-function StaffApplication() {
+const StaffApplication = () => {
   const [formData, setFormData] = useState({
-    discordId: '',
-    age: '',
-    timezone: '',
-    position: '',
-    experience: '',
-    reason: '',
-    strengths: '',
-    additionalInfo: ''
+    name: "",
+    discord: "",
+    age: "",
+    experience: "",
+    availability: "",
+    motivation: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isFormOpen, setIsFormOpen] = useState(true);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get('/.netlify/functions/staff-form-status')
-      .then((response) => {
-        setIsFormOpen(response.data.isStaffFormOpen);
-      })
-      .catch((error) => {
-        console.error('Failed to fetch staff form status:', error);
-        setIsFormOpen(false);
-      });
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const webhookUrl = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL_HERE';
-
-      const discordMessage = {
-        embeds: [
-          {
-            title: 'New Staff Application',
-            color: 0x0099ff,
-            fields: [
-              { name: '📝 Personal Information', value: `**→ Discord ID:** ${formData.discordId}\n**→ Age:** ${formData.age}\n**→ Timezone:** ${formData.timezone}`, inline: false },
-              { name: '🎭 Position Applied For', value: formData.position, inline: false },
-              { name: '💼 Experience', value: formData.experience || 'No prior experience provided', inline: false },
-              { name: '🎯 Why Join as Staff?', value: formData.reason, inline: false },
-              { name: '💪 Strengths', value: formData.strengths, inline: false },
-              { name: '📝 Additional Information', value: formData.additionalInfo || 'N/A', inline: false }
-            ],
-            timestamp: new Date().toISOString(),
-            footer: { text: 'City Town RP Staff Application' }
-          }
-        ]
-      };
-
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(discordMessage)
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to send application');
-      }
-
-      alert('Application submitted successfully! Our team will review it.');
-
-      setFormData({
-        discordId: '',
-        age: '',
-        timezone: '',
-        position: '',
-        experience: '',
-        reason: '',
-        strengths: '',
-        additionalInfo: ''
-      });
-    } catch (error) {
-      console.error('Error submitting application:', error);
-      alert('Staff applications are currently closed. Check our Discord announcements for updates.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  if (!isFormOpen) {
-    return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-[#141E30] to-[#243B55] text-white px-4">
-        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
-          Staff Applications are Closed
-        </h1>
-        <p className="text-lg mt-4 text-gray-300">Check our Discord announcements for updates.</p>
-      </div>
-    );
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    // Add submission logic here
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#141E30] to-[#243B55] text-white py-16 px-4">
-      <div className="max-w-3xl mx-auto bg-[#1E293B] shadow-lg rounded-xl p-8 border border-gray-700">
-        <Link to="/" className="flex items-center gap-2 text-gray-300 hover:text-white mb-6">
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back to Home</span>
-        </Link>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-800 to-black text-white">
+      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 className="text-2xl font-bold mb-4 text-center">Staff Application</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 bg-gray-800 border border-gray-700 rounded"
+            />
+          </div>
 
-        <h1 className="text-4xl font-extrabold text-center bg-gradient-to-r from-blue-400 to-teal-500 bg-clip-text text-transparent">
-          CTRP | Staff Application
-        </h1>
+          <div>
+            <label className="block text-sm font-medium">Discord Username</label>
+            <input
+              type="text"
+              name="discord"
+              value={formData.discord}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 bg-gray-800 border border-gray-700 rounded"
+            />
+          </div>
 
-        <p className="text-gray-300 text-center mt-2">Join the team and help shape the future of City Town RP!</p>
+          <div>
+            <label className="block text-sm font-medium">Age</label>
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 bg-gray-800 border border-gray-700 rounded"
+            />
+          </div>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          {['discordId', 'age', 'timezone', 'position'].map((field) => (
-            <div key={field}>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                {field.replace(/([A-Z])/g, ' $1').trim()}*
-              </label>
-              <input
-                type="text"
-                name={field}
-                value={formData[field]}
-                onChange={handleChange}
-                required
-                className="w-full bg-[#334155] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          ))}
+          <div>
+            <label className="block text-sm font-medium">Previous Staff Experience</label>
+            <textarea
+              name="experience"
+              value={formData.experience}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 bg-gray-800 border border-gray-700 rounded h-24"
+            ></textarea>
+          </div>
 
-          {['experience', 'reason', 'strengths', 'additionalInfo'].map((field) => (
-            <div key={field}>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                {field.replace(/([A-Z])/g, ' $1').trim()}
-              </label>
-              <textarea
-                name={field}
-                value={formData[field]}
-                onChange={handleChange}
-                className="w-full bg-[#334155] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          ))}
+          <div>
+            <label className="block text-sm font-medium">Availability (hours per week)</label>
+            <input
+              type="text"
+              name="availability"
+              value={formData.availability}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 bg-gray-800 border border-gray-700 rounded"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">Why do you want to be staff?</label>
+            <textarea
+              name="motivation"
+              value={formData.motivation}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 bg-gray-800 border border-gray-700 rounded h-24"
+            ></textarea>
+          </div>
 
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg font-semibold text-white transition-all"
-            disabled={isSubmitting}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            <Send className="w-5 h-5" />
-            {isSubmitting ? 'Submitting...' : 'Submit Application'}
+            Submit Application
           </button>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default StaffApplication;

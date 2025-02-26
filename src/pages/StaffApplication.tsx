@@ -124,9 +124,9 @@ const StaffApplication = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
       <div className="container mx-auto px-4">
-        <Link to="/staff-dashboard" className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8">
+        <Link to="/" className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8">
           <ArrowLeft className="w-5 h-5" />
-          Back to Dashboard
+          Back to Home
         </Link>
 
         <div className="max-w-3xl mx-auto">

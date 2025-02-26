@@ -1,39 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Send } from 'lucide-react';
+import React, { useState } from "react";
+import { Calendar, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
-function StaffApplication() {
+const StaffApplication = () => {
   const [formData, setFormData] = useState({
-    discordId: '',
-    age: '',
-    timezone: '',
-    staffExperience: '',
+    discordId: "",
+    age: "",
+    timezone: "",
+    staffExperience: "",
     microphone: false,
-    strengths: '',
-    weaknesses: '',
-    whyJoin: '',
-    scenarioResponse: '',
-    availability: '',
-    anyAdditionalInfo: ''
+    strengths: "",
+    weaknesses: "",
+    whyJoin: "",
+    scenarioResponse: "",
+    availability: "",
+    anyAdditionalInfo: "",
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const handleSubmit = async (e) => {
+  const handleSubmitApplication = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
-      const webhookUrl = "https://discord.com/api/webhooks/your-webhook-url";
-
+      const webhookUrl =
+        "https://discord.com/api/webhooks/1341664992952320060/7OGaoerPBjZV8cARlLdprqgUlyw54wBN5hO51gxbJeZl2PBKc-HesPzo3Kdi6Q3wvDCf";
+      
       const discordMessage = {
         embeds: [
           {
             title: "New Staff Application",
-            color: 0x9C44FF,
+            color: 0x44ff44,
             fields: [
               {
                 name: "📝 Personal Information",
@@ -42,115 +39,175 @@ function StaffApplication() {
                   `**Age:** ${formData.age}`,
                   `**Timezone:** ${formData.timezone}`,
                   `**Has Microphone:** ${formData.microphone ? "Yes" : "No"}`,
-                ].join('\n'),
-                inline: false
+                ].join("\n"),
+                inline: false,
               },
               {
                 name: "📋 Staff Experience",
                 value: formData.staffExperience || "No previous staff experience",
-                inline: false
+                inline: false,
               },
               {
                 name: "💪 Strengths & Weaknesses",
                 value: `**Strengths:** ${formData.strengths}\n**Weaknesses:** ${formData.weaknesses}`,
-                inline: false
+                inline: false,
               },
               {
                 name: "❓ Why Join the Team?",
                 value: formData.whyJoin,
-                inline: false
+                inline: false,
+              },
+              {
+                name: "🎭 Scenario Response",
+                value: formData.scenarioResponse || "Not provided",
+                inline: false,
               },
               {
                 name: "⏳ Availability & Additional Info",
-                value: `**Availability:** ${formData.availability}\n**Additional Info:** ${formData.anyAdditionalInfo || "None"}`,
-                inline: false
-              }
+                value: `**Availability:** ${formData.availability}\n**Additional Info:** ${
+                  formData.anyAdditionalInfo || "None"
+                }`,
+                inline: false,
+              },
             ],
             timestamp: new Date().toISOString(),
             footer: {
-              text: "City Town RP Staff Application"
-            }
-          }
-        ]
+              text: "CTRP Staff Application",
+            },
+          },
+        ],
       };
 
       const response = await fetch(webhookUrl, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(discordMessage)
+        body: JSON.stringify(discordMessage),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send application');
+        throw new Error("Failed to send application request");
       }
 
-      alert('Application submitted successfully! Please wait for our team to review your application.');
+      alert("Application submitted successfully!");
       setFormData({
-        discordId: '',
-        age: '',
-        timezone: '',
-        staffExperience: '',
+        discordId: "",
+        age: "",
+        timezone: "",
+        staffExperience: "",
         microphone: false,
-        strengths: '',
-        weaknesses: '',
-        whyJoin: '',
-        scenarioResponse: '',
-        availability: '',
-        anyAdditionalInfo: ''
+        strengths: "",
+        weaknesses: "",
+        whyJoin: "",
+        scenarioResponse: "",
+        availability: "",
+        anyAdditionalInfo: "",
       });
     } catch (error) {
-      console.error('Error submitting application:', error);
-      alert('There was an error submitting your application. Please try again or contact support.');
+      console.error("Error submitting application:", error);
+      alert("Application form submission failed.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? e.target.checked : value
+      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
     }));
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
       <div className="container mx-auto px-4">
-        <Link to="/" className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8">
+        <Link to="/staff-dashboard" className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 mb-8">
           <ArrowLeft className="w-5 h-5" />
-          Back to Home
+          Back to Dashboard
         </Link>
-        
+
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-            🛠 Staff Application
+          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            Staff Application
           </h1>
-          
-          <form onSubmit={handleSubmit} className="space-y-8">
+
+          <form onSubmit={handleSubmitApplication} className="space-y-8">
             <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Personal Information</h2>
-              <input type="text" name="discordId" placeholder="Discord ID" value={formData.discordId} onChange={handleChange} required />
-              <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} required min="15" />
-              <input type="text" name="timezone" placeholder="Timezone" value={formData.timezone} onChange={handleChange} required />
-              <label>
-                <input type="checkbox" name="microphone" checked={formData.microphone} onChange={handleChange} /> I have a working microphone
-              </label>
+              <div>
+                <label htmlFor="discordId" className="block text-sm font-medium text-gray-300 mb-2">
+                  Discord ID
+                </label>
+                <input
+                  type="text"
+                  name="discordId"
+                  id="discordId"
+                  placeholder="Enter your Discord ID"
+                  value={formData.discordId}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="age" className="block text-sm font-medium text-gray-300 mb-2">
+                  Age
+                </label>
+                <input
+                  type="number"
+                  name="age"
+                  id="age"
+                  placeholder="Enter your age"
+                  value={formData.age}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="timezone" className="block text-sm font-medium text-gray-300 mb-2">
+                  Timezone
+                </label>
+                <input
+                  type="text"
+                  name="timezone"
+                  id="timezone"
+                  placeholder="Enter your timezone"
+                  value={formData.timezone}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    name="microphone"
+                    checked={formData.microphone}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-green-500 border-gray-600 rounded focus:ring-green-500"
+                  />
+                  <span className="text-sm font-medium text-gray-300">I have a working microphone*</span>
+                </label>
+              </div>
             </div>
-            
-            <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Experience & Qualities</h2>
-              <textarea name="staffExperience" placeholder="Describe your previous staff experience" value={formData.staffExperience} onChange={handleChange} />
-              <textarea name="strengths" placeholder="Your strengths" value={formData.strengths} onChange={handleChange} />
-              <textarea name="weaknesses" placeholder="Your weaknesses" value={formData.weaknesses} onChange={handleChange} />
-            </div>
-            
+
             <div className="flex justify-end">
-              <button type="submit" disabled={isSubmitting} className="bg-purple-500 px-8 py-3 rounded-lg font-semibold">
-                <Send className="w-5 h-5" />
-                {isSubmitting ? 'Submitting...' : 'Submit Application'}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 px-8 py-3 rounded-lg font-semibold text-white transition-all ${
+                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                <Calendar className="w-5 h-5" />
+                {isSubmitting ? "Submitting..." : "Submit Application"}
               </button>
             </div>
           </form>
@@ -158,6 +215,6 @@ function StaffApplication() {
       </div>
     </div>
   );
-}
+};
 
 export default StaffApplication;

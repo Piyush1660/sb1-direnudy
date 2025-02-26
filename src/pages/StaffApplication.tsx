@@ -3,15 +3,13 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Send } from 'lucide-react';
 import axios from 'axios';
 
-function StreamerApplication() {
+function StaffApplication() {
   const [formData, setFormData] = useState({
     discordId: '',
     age: '',
     timezone: '',
-    platform: '',
-    channelLink: '',
-    followerCount: '',
-    streamingExperience: '',
+    position: '',
+    experience: '',
     reason: '',
     strengths: '',
     additionalInfo: ''
@@ -26,17 +24,17 @@ function StreamerApplication() {
 
   useEffect(() => {
     axios
-      .get('/.netlify/functions/streamer-form-status')
+      .get('/.netlify/functions/staff-form-status')
       .then((response) => {
-        setIsFormOpen(response.data.isStreamerFormOpen);
+        setIsFormOpen(response.data.isStaffFormOpen);
       })
       .catch((error) => {
-        console.error('Failed to fetch streamer form status:', error);
+        console.error('Failed to fetch staff form status:', error);
         setIsFormOpen(false);
       });
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -46,7 +44,7 @@ function StreamerApplication() {
       const discordMessage = {
         embeds: [
           {
-            title: 'New Streamer Application',
+            title: 'New Staff Application',
             color: 0x0099ff,
             fields: [
               {
@@ -55,17 +53,17 @@ function StreamerApplication() {
                 inline: false
               },
               {
-                name: '🎥 Streaming Details',
-                value: `**→ Platform:** ${formData.platform}\n**→ Channel Link:** ${formData.channelLink}\n**→ Followers:** ${formData.followerCount}`,
+                name: '🎭 Position Applied For',
+                value: formData.position,
                 inline: false
               },
               {
                 name: '💼 Experience',
-                value: formData.streamingExperience || 'No prior experience provided',
+                value: formData.experience || 'No prior experience provided',
                 inline: false
               },
               {
-                name: '🎯 Why Join as Streamer?',
+                name: '🎯 Why Join as Staff?',
                 value: formData.reason,
                 inline: false
               },
@@ -82,7 +80,7 @@ function StreamerApplication() {
             ],
             timestamp: new Date().toISOString(),
             footer: {
-              text: 'City Town RP Streamer Application'
+              text: 'City Town RP Staff Application'
             }
           }
         ]
@@ -104,23 +102,21 @@ function StreamerApplication() {
         discordId: '',
         age: '',
         timezone: '',
-        platform: '',
-        channelLink: '',
-        followerCount: '',
-        streamingExperience: '',
+        position: '',
+        experience: '',
         reason: '',
         strengths: '',
         additionalInfo: ''
       });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('Streamer applications are currently closed. Check our Discord announcements for updates.');
+      alert('Staff applications are currently closed. Check our Discord announcements for updates.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -133,7 +129,7 @@ function StreamerApplication() {
       <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-teal-500 bg-clip-text text-transparent">
-            Streamer Applications are Currently Closed
+            Staff Applications are Currently Closed
           </h1>
           <p className="text-lg">Check out our Discord #announcements channel for updates!</p>
         </div>
@@ -151,65 +147,34 @@ function StreamerApplication() {
 
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-teal-500 bg-clip-text text-transparent">
-            CTRP | Streamer Application
+            CTRP | Staff Application
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Personal Information */}
-            <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Personal Information</h2>
-              {['discordId', 'age', 'timezone'].map((field) => (
-                <div key={field}>
-                  <label htmlFor={field} className="block text-sm font-medium text-gray-300 mb-2">
-                    {field.replace(/([A-Z])/g, ' $1').trim()}*
-                  </label>
-                  <input
-                    type="text"
-                    name={field}
-                    id={field}
-                    placeholder={field.replace(/([A-Z])/g, ' $1').trim()}
-                    value={formData[field as keyof typeof formData]}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              ))}
-            </div>
+            {['discordId', 'age', 'timezone', 'position'].map((field) => (
+              <div key={field}>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  {field.replace(/([A-Z])/g, ' $1').trim()}*
+                </label>
+                <input
+                  type="text"
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            ))}
 
-            {/* Streaming Details */}
-            <div className="bg-white/5 p-8 rounded-xl space-y-6">
-              <h2 className="text-2xl font-semibold mb-6">Streaming Details</h2>
-              {['platform', 'channelLink', 'followerCount'].map((field) => (
-                <div key={field}>
-                  <label htmlFor={field} className="block text-sm font-medium text-gray-300 mb-2">
-                    {field.replace(/([A-Z])/g, ' $1').trim()}*
-                  </label>
-                  <input
-                    type="text"
-                    name={field}
-                    id={field}
-                    placeholder={field.replace(/([A-Z])/g, ' $1').trim()}
-                    value={formData[field as keyof typeof formData]}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Experience & Motivation */}
-            {['streamingExperience', 'reason', 'strengths', 'additionalInfo'].map((field) => (
-              <div key={field} className="bg-white/5 p-8 rounded-xl space-y-6">
-                <label htmlFor={field} className="block text-sm font-medium text-gray-300 mb-2">
+            {['experience', 'reason', 'strengths', 'additionalInfo'].map((field) => (
+              <div key={field}>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   {field.replace(/([A-Z])/g, ' $1').trim()}
                 </label>
                 <textarea
                   name={field}
-                  id={field}
-                  placeholder={`Enter ${field.replace(/([A-Z])/g, ' $1').trim()}`}
-                  value={formData[field as keyof typeof formData]}
+                  value={formData[field]}
                   onChange={handleChange}
                   className="w-full bg-white/10 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -227,4 +192,4 @@ function StreamerApplication() {
   );
 }
 
-export default StreamerApplication;
+export default StaffApplication;

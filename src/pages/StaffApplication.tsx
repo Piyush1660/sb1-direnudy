@@ -24,13 +24,13 @@ const StaffApplication = () => {
     setIsSubmitting(true);
     try {
       const webhookUrl =
-        "https://discord.com/api/webhooks/1341664992952320060/7OGaoerPBjZV8cARlLdprqgUlyw54wBN5hO51gxbJeZl2PBKc-HesPzo3Kdi6Q3wvDCf";
+        "https://discord.com/api/webhooks/1339935195650064404/bsbzzU6XEhgTbQ4ODPocnwhfiTITEJJIDnq3bYIH6oYyjL_a2r7WBJnQxaZRtc6Hgdbd";
       
       const discordMessage = {
         embeds: [
           {
             title: "New Staff Application",
-            color: 0x44ff44,
+            color: 0x9C44FF,
             fields: [
               {
                 name: "📝 Personal Information",
@@ -124,13 +124,13 @@ const StaffApplication = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] text-white py-20">
       <div className="container mx-auto px-4">
-        <Link to="/staff-dashboard" className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 mb-8">
+        <Link to="/staff-dashboard" className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8">
           <ArrowLeft className="w-5 h-5" />
           Back to Dashboard
         </Link>
 
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
             Staff Application
           </h1>
 
@@ -293,9 +293,7 @@ const StaffApplication = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 px-8 py-3 rounded-lg font-semibold text-white transition-all ${
-                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-3 rounded-lg font-semibold transition-all ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 <Calendar className="w-5 h-5" />
                 {isSubmitting ? "Submitting..." : "Submit Application"}
